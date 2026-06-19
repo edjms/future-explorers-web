@@ -1,1 +1,108 @@
 /* You can add global styles to this file, and also import other style files */
+.buscador-container {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 500px; /* Para que no se estire feo por toda la pantalla */
+}
+
+.icono-lupa {
+  position: absolute;
+  left: 14px;
+  font-size: 1.1rem;
+  color: #94a3b8;
+  pointer-events: none; /* Para que no interfiera al hacer clic */
+}
+
+.input-busqueda {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem; /* Espacio extra a la izquierda para la lupa */
+  font-size: 0.95rem;
+  color: #0f172a;
+  background-color: #f8fafc; /* Fondo gris muy sutil */
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Efecto cuando el usuario hace clic para escribir */
+.input-busqueda:focus {
+  background-color: #ffffff;
+  border-color: #38bdf8; /* Cambia al azul cian de la app */
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* --- ESTILOS PARA LA TABLA DE ESTUDIANTES --- */
+.tabla-container {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+  overflow: hidden; /* Para que los bordes redondeados corten la tabla */
+  width: 100%;
+}
+
+.tabla-estudiantes {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.tabla-estudiantes th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.tabla-estudiantes td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+/* Efecto Hover en las filas */
+.tabla-estudiantes tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Alineaciones útiles */
+.text-center { text-align: center !important; }
+
+/* Óvalos de Estado (Badges) */
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.badge-activo {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+.badge-inactivo {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Botones de Acción (Iconos) */
+.btn-accion {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  margin: 0 0.25rem;
+}
+.btn-editar:hover { background-color: #e0f2fe; }
+.btn-eliminar:hover { background-color: #fee2e2; }
