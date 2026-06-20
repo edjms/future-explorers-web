@@ -1,7 +1,11 @@
 
 <div class="pantalla-estudiantes-container">
 
-  <app-cabecera></app-cabecera>
+  <app-cabecera (alHacerClicRegistrar)="abrirFormulario()"></app-cabecera>
   <app-buscador></app-buscador>
   <app-tabla-estudiantes></app-tabla-estudiantes>
+
+  @if (mostrarModal) {
+    <app-formulario-estudiante (cerrar)="cerrarFormulario()"></app-formulario-estudiante>
+  }
 </div>

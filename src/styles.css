@@ -1,108 +1,123 @@
 /* You can add global styles to this file, and also import other style files */
-.buscador-container {
-  margin-bottom: 2rem;
-  width: 100%;
-}
 
-.input-wrapper {
-  position: relative;
+
+
+
+/* --- ESTILOS PARA EL MODAL FLOTANTE --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.6); /* Fondo oscuro transparente */
+  backdrop-filter: blur(4px); /* Efecto borroso elegante */
   display: flex;
+  justify-content: center;
   align-items: center;
-  max-width: 500px; /* Para que no se estire feo por toda la pantalla */
+  z-index: 9999; /* Asegura que flote sobre TODO */
 }
 
-.icono-lupa {
-  position: absolute;
-  left: 14px;
-  font-size: 1.1rem;
-  color: #94a3b8;
-  pointer-events: none; /* Para que no interfiera al hacer clic */
-}
-
-.input-busqueda {
+.modal-content {
+  background: #ffffff;
   width: 100%;
-  padding: 0.75rem 1rem 0.75rem 2.5rem; /* Espacio extra a la izquierda para la lupa */
-  font-size: 0.95rem;
-  color: #0f172a;
-  background-color: #f8fafc; /* Fondo gris muy sutil */
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  outline: none;
-  transition: all 0.2s ease;
+  max-width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: modalAparecer 0.2s ease-out;
+  overflow: hidden;
 }
 
-/* Efecto cuando el usuario hace clic para escribir */
-.input-busqueda:focus {
+@keyframes modalAparecer {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin: 0;
+  font-weight: 700;
+}
+
+.btn-cerrar-x {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.btn-cerrar-x:hover { color: #475569; }
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  outline: none;
+  background-color: #f8fafc;
+  box-sizing: border-box;
+}
+
+.form-group input:focus, .form-group select:focus {
+  border-color: #38bdf8;
   background-color: #ffffff;
-  border-color: #38bdf8; /* Cambia al azul cian de la app */
   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
 }
 
-/* --- ESTILOS PARA LA TABLA DE ESTUDIANTES --- */
-.tabla-container {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  border: 1px solid #e2e8f0;
-  overflow: hidden; /* Para que los bordes redondeados corten la tabla */
-  width: 100%;
-}
-
-.tabla-estudiantes {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  font-size: 0.95rem;
-}
-
-.tabla-estudiantes th {
+.modal-footer {
+  padding: 1rem 1.5rem;
   background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.btn-cancelar {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   color: #475569;
-  font-weight: 600;
-  padding: 1rem 1.5rem;
-  border-bottom: 2px solid #e2e8f0;
-}
-
-.tabla-estudiantes td {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #f1f5f9;
-  color: #334155;
-}
-
-/* Efecto Hover en las filas */
-.tabla-estudiantes tbody tr:hover {
-  background-color: #f8fafc;
-}
-
-/* Alineaciones útiles */
-.text-center { text-align: center !important; }
-
-/* Óvalos de Estado (Badges) */
-.badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-.badge-activo {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-.badge-inactivo {
-  background-color: #fee2e2;
-  color: #b91c1c;
-}
-
-/* Botones de Acción (Iconos) */
-.btn-accion {
-  background: none;
-  border: none;
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 0.25rem 0.5rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 6px;
-  transition: background-color 0.2s;
-  margin: 0 0.25rem;
+  font-weight: 600;
+  cursor: pointer;
 }
-.btn-editar:hover { background-color: #e0f2fe; }
-.btn-eliminar:hover { background-color: #fee2e2; }
+.btn-cancelar:hover { background-color: #f1f5f9; }
+
+.btn-guardar {
+  background-color: #38bdf8;
+  border: none;
+  color: #0f172a;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-guardar:hover { background-color: #0ea5e9; }

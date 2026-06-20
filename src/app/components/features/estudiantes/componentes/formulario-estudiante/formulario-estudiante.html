@@ -1,0 +1,35 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h2>Registrar Nuevo Explorador</h2>
+      <button class="btn-cerrar-x" (click)="cerrar.emit()">✕</button>
+    </div>
+
+    <form class="modal-body">
+      <div class="form-group">
+        <label for="nombre">Nombre Completo</label>
+        <input type="text" id="nombre" placeholder="Ej. Juan Pérez">
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" id="correo" placeholder="Ej. juan.perez&#64;mail.com">
+      </div>
+
+      <div class="form-group">
+        <label for="estado">Estado Inicial</label>
+        <select id="estado">
+          <option value="true">Activo</option>
+          <option value="false">Inactivo</option>
+        </select>
+      </div>
+    </form>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrar.emit()">Cancelar</button>
+      <button class="btn-guardar" (click)="guardarEstudiante()">Guardar Estudiante</button>
+    </div>
+
+  </div>
+</div>
