@@ -9,8 +9,18 @@
     <form class="modal-body" [formGroup]="formularioEstudiante" (ngSubmit)="guardarEstudiante()">
 
       <div class="form-group">
+        <label for="documento">Documento de Identidad</label>
+        <input type="text" id="documento" formControlName="documento" class="form-control" placeholder="Ej: 12345678">
+      </div>
+
+      <div class="form-group">
         <label for="nombre">Nombre Completo</label>
         <input type="text" id="nombre" formControlName="nombre" placeholder="Ej. Juan Pérez">
+      </div>
+
+      <div class="form-group">
+        <label for="apellido">Apellido</label>
+        <input type="text" id="apellido" formControlName="apellido" class="form-control" placeholder="Ej: Mazo">
       </div>
 
       <div class="form-group">

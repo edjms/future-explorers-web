@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EstudianteService } from '../../servicios/estudiante';
 
 @Component({
   selector: 'app-formulario-estudiante',
@@ -8,25 +9,90 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './formulario-estudiante.html',
   styles: ``,
 })
-export class FormularioEstudiante {
+export class FormularioEstudiante implements OnInit {
+
+  formularioEstudiante!: FormGroup;
+
   @Output() cerrar = new EventEmitter<void>();
 
-  formularioEstudiante: FormGroup;
+  constructor(
+    private fb: FormBuilder,
+    private estudianteService: EstudianteService,
+  ) {}
 
-  constructor(private fb: FormBuilder) {
+  ngOnInit(): void {
     this.formularioEstudiante = this.fb.group({
-      nombre: ['', [  Validators.required, Validators.minLength(3)]], // Nombre obligatorio, mínimo 3 letras
-      correo: ['', [Validators.required, Validators.email]], // Correo obligatorio y con formato válido
-      estado: ['true', Validators.required], // Estado por defecto en 'Activo' (true)
+      documento: ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      correo: ['', [Validators.required, Validators.email]],
+      estado: [true, [Validators.required]]
     });
   }
+
   guardarEstudiante() {
     if (this.formularioEstudiante.valid) {
-      const datosEstudiante = this.formularioEstudiante.value;
-      console.log('🚀 DATOS LISTOS PARA SPRING BOOT:', datosEstudiante);
-      this.cerrar.emit();
+      const formValues = this.formularioEstudiante.value;
+      const hoy = new Date().toISOString().split('T')[0];
+
+      // 🏗️ Armamos el objeto con los datos reales del formulario
+      const estudianteRequestBody = {
+        documento: formValues.documento,
+        nombre: formValues.nombre,
+        apellido: formValues.apellido,
+        email: formValues.correo,
+        fechaIngreso: hoy,
+        fechaVencimiento: hoy,
+        activo: formValues.estado === 'true' || formValues.estado === true,
+
+        // ⚠️ TEMPORAL: Se dejan estos IDs fijos (1) porque aún no hemos
+        // creado los servicios en Angular para listar profesores y tarifas reales.
+        tarifa: {
+          id: 1
+        },
+        profesor: {
+          id: 1
+        }
+      };
+
+      console.log('🚀 Despachando estructura gigante al servicio...', estudianteRequestBody);
+
+      this.estudianteService.registrarEstudiante(estudianteRequestBody).subscribe({
+        next: (respuesta) => {
+          console.log('✅ ¡Guardado con éxito en el Backend!', respuesta);
+          alert('¡Estudiante guardado correctamente!');
+          this.cerrar.emit();
+        },
+        error: (error) => {
+          console.error('🔴 Error al conectar con Spring Boot:', error);
+          alert('No se pudo guardar el estudiante. Revisa la consola.');
+        }
+      });
+
     } else {
       alert('Por favor, rellena todos los campos correctamente.');
     }
   }
+  /*guardarEstudiante() {
+    if (this.formularioEstudiante.valid) {
+      const datosEstudiante = this.formularioEstudiante.value;
+      console.log('Entregando datos al servicio...', datosEstudiante);
+      this.estudianteService.registrarEstudiante(datosEstudiante).subscribe({
+        next: (respuesta) => {
+          console.log('¡✅ Guardado con éxito en el Backend!', respuesta);
+          alert('¡Estudiante guardado correctamente!');
+          this.cerrar.emit();
+        },
+        error: (error) => {
+          // ❌ Si el Backend está apagado o falla:
+          console.error('🔴 Error al conectar con Spring Boot:', error);
+          alert('No se pudo guardar el estudiante. (¿Está encendido el Backend?)');
+          this.cerrar.emit(); // Cerramos el modal de todos modos por ahora
+        },
+      });
+      this.cerrar.emit();
+    } else {
+      alert('Por favor, rellena todos los campos correctamente.');
+    }
+  }**/
 }
