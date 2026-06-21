@@ -6,30 +6,32 @@
       <button class="btn-cerrar-x" (click)="cerrar.emit()">✕</button>
     </div>
 
-    <form class="modal-body">
+    <form class="modal-body" [formGroup]="formularioEstudiante" (ngSubmit)="guardarEstudiante()">
+
       <div class="form-group">
         <label for="nombre">Nombre Completo</label>
-        <input type="text" id="nombre" placeholder="Ej. Juan Pérez">
+        <input type="text" id="nombre" formControlName="nombre" placeholder="Ej. Juan Pérez">
       </div>
 
       <div class="form-group">
         <label for="correo">Correo Electrónico</label>
-        <input type="email" id="correo" placeholder="Ej. juan.perez&#64;mail.com">
+        <input type="email" id="correo" formControlName="correo" placeholder="Ej. juan.perez&#64;mail.com">
       </div>
 
       <div class="form-group">
         <label for="estado">Estado Inicial</label>
-        <select id="estado">
+        <select id="estado" formControlName="estado">
           <option value="true">Activo</option>
           <option value="false">Inactivo</option>
         </select>
       </div>
-    </form>
 
-    <div class="modal-footer">
-      <button class="btn-cancelar" (click)="cerrar.emit()">Cancelar</button>
-      <button class="btn-guardar" (click)="guardarEstudiante()">Guardar Estudiante</button>
-    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-cancelar" (click)="cerrar.emit()">Cancelar</button>
+        <button type="submit" class="btn-guardar">Guardar Estudiante</button>
+      </div>
+
+    </form>
 
   </div>
 </div>
