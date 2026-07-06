@@ -10,11 +10,11 @@ import { EstudianteService } from '../../servicios/estudiante';
   styles: ``,
 })
 export class FormularioEstudiante implements OnInit {
-
   formularioEstudiante!: FormGroup;
 
   @Output() cerrar = new EventEmitter<void>();
 
+  imagenPreview: string | null = null;
   constructor(
     private fb: FormBuilder,
     private estudianteService: EstudianteService,
@@ -26,8 +26,18 @@ export class FormularioEstudiante implements OnInit {
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
       correo: ['', [Validators.required, Validators.email]],
-      estado: [true, [Validators.required]]
+      imagenUrl: [''],
+      estado: [true, [Validators.required]],
     });
+  }
+
+  capturarNombreArchivo(event: any) {
+    const archivo = event.target.files[0];
+    if (archivo) {
+      this.formularioEstudiante.patchValue({
+        imagenUrl: archivo.name
+      });
+    }
   }
 
   guardarEstudiante() {
@@ -42,17 +52,17 @@ export class FormularioEstudiante implements OnInit {
         apellido: formValues.apellido,
         email: formValues.correo,
         fechaIngreso: hoy,
-        fechaVencimiento: hoy,
+        imagenUrl: formValues.imagenUrl,
         activo: formValues.estado === 'true' || formValues.estado === true,
 
         // ⚠️ TEMPORAL: Se dejan estos IDs fijos (1) porque aún no hemos
         // creado los servicios en Angular para listar profesores y tarifas reales.
         tarifa: {
-          id: 1
+          id: 1,
         },
         profesor: {
-          id: 1
-        }
+          id: 1,
+        },
       };
 
       console.log('🚀 Despachando estructura gigante al servicio...', estudianteRequestBody);
@@ -66,9 +76,8 @@ export class FormularioEstudiante implements OnInit {
         error: (error) => {
           console.error('🔴 Error al conectar con Spring Boot:', error);
           alert('No se pudo guardar el estudiante. Revisa la consola.');
-        }
+        },
       });
-
     } else {
       alert('Por favor, rellena todos los campos correctamente.');
     }

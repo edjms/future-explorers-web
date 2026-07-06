@@ -1,35 +1,65 @@
-<div class="tabla-container">
-  <table class="tabla-estudiantes">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nombre Completo</th>
-      <th>Correo Electrónico</th>
-      <th>Estado</th>
-      <th class="text-center">Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td><strong>#001</strong></td>
-      <td>Carlos Mendoza</td>
-      <td>carlos.mendoza&#64;mail.com</td>
-      <td><span class="badge badge-activo">Activo</span></td>
-      <td class="text-center">
-        <button class="btn-accion btn-editar" title="Editar">✏️</button>
-        <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
-      </td>
-    </tr>
-    <tr>
-      <td><strong>#002</strong></td>
-      <td>Ana María Restrepo</td>
-      <td>ana.restrepo&#64;mail.com</td>
-      <td><span class="badge badge-inactivo">Inactivo</span></td>
-      <td class="text-center">
-        <button class="btn-accion btn-editar" title="Editar">✏️</button>
-        <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<div style="max-width: 1200px; margin: 0;">
+  <div class="tabla-container">
+    <table class="tabla-estudiantes">
+      <thead>
+      <tr>
+        <th>Documento</th>
+        <th>Estudiante</th>
+        <th>Profesor Asignado</th>
+        <th>Vencimiento</th>
+        <th>Días Restantes</th>
+        <th class="text-center">Estado Financiero</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let alumno of alumnos">
+        <td>{{ alumno.documento }}</td>
+        <td style="font-weight: 500; color: #1e293b;">{{ alumno.nombreCompleto }}</td>
+        <td>{{ alumno.profesorAsignado }}</td>
+        <td>{{ alumno.fechaVencimiento | date:'dd/MM/yyyy' }}</td>
+        <td>
+        <span [ngStyle]="{
+          'color': !alumno.fechaVencimiento
+                    ? '#64748b'
+                    : (alumno.diasParaVencer <= 5 ? '#dc3545' : '#198754')
+        }"
+              style="font-weight: bold;">
+
+    {{ alumno.fechaVencimiento ? (alumno.diasParaVencer >= 0 ? alumno.diasParaVencer + ' días' : 'Vencido hace ' + Math.abs(alumno.diasParaVencer) + ' días') : 'N/A' }}
+  </span>
+        </td>
+        <td class="text-center">
+            <span class="badge" [ngClass]="alumno.activoPorPago ? 'badge-activo' : 'badge-inactivo'">
+              {{ alumno.activoPorPago ? 'ACTIVO' : 'BLOQUEADO' }}
+            </span>
+        </td>
+      </tr>
+
+      <tr *ngIf="alumnos.length === 0">
+        <td colspan="6" class="text-center" style="padding: 2rem; color: #64748b;">
+          No hay estudiantes registrados o la consulta está vacía.
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="paginacion-container">
+    <span>
+      Mostrando página <strong>{{ paginaActual + 1 }}</strong> de {{ totalPaginas }} (Total: {{ totalElementos }} alumnos)
+    </span>
+
+    <div class="btn-group">
+      <button class="btn-paginacion"
+              (click)="paginaAnterior()"
+              [disabled]="paginaActual === 0">
+        Anterior
+      </button>
+      <button class="btn-paginacion"
+              (click)="paginaSiguiente()"
+              [disabled]="paginaActual === totalPaginas - 1 || totalPaginas === 0">
+        Siguiente
+      </button>
+    </div>
+  </div>
 </div>

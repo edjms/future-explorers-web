@@ -5,6 +5,31 @@
       type="text"
       class="input-busqueda"
       placeholder="Buscar estudiante por nombre, correo o cédula..."
+      [(ngModel)]="terminoBusqueda"
+      (keyup.enter)="ejecutarBusqueda()"
     >
   </div>
+
+  @if (estudianteEncontrado) {
+  <div class="tarjeta-estudiante">
+
+    <div>
+      <img
+        [src]="estudianteEncontrado.imagenUrl ? 'assets/images/perfiles/' + estudianteEncontrado.imagenUrl : 'https://placehold.co/100x100/png?text=Sin+Foto'"
+        alt="Foto estudiante"
+        class="avatar-foto"
+      />
+    </div>
+
+    <div class="info-estudiante">
+      <h4>{{ estudianteEncontrado.nombre }} {{ estudianteEncontrado.apellido }}</h4>
+      <p>Doc: {{ estudianteEncontrado.documento }}</p>
+
+      <span class="badge-estado" [ngClass]="estudianteEncontrado.activo ? 'badge-activo' : 'badge-inactivo'">
+          {{ estudianteEncontrado.activo ? '✓ Activo' : '✗ Inactivo' }}
+        </span>
+    </div>
+
+  </div>
+  }
 </div>

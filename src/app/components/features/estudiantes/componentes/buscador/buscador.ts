@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { EstudianteService } from '../../servicios/estudiante';
+
 
 @Component({
   selector: 'app-buscador',
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './buscador.html',
   styles: `
     .buscador-container {
@@ -45,4 +49,29 @@ import { Component } from '@angular/core';
     }
   `,
 })
-export class Buscador {}
+export class Buscador {
+  //@Output() alActualizar = new EventEmitter<void>();
+
+  terminoBusqueda: string = '';
+  estudianteEncontrado: any = null;
+
+  constructor(private estudianteService: EstudianteService) {}
+
+  ejecutarBusqueda() {
+    if (!this.terminoBusqueda.trim()) {
+      this.estudianteEncontrado = null;
+      return;
+    }
+
+    this.estudianteService.obtenerEstudiantePorDocumento(this.terminoBusqueda).subscribe({
+      next: (resultado: any) => {
+        this.estudianteEncontrado = resultado;
+      },
+      error: (err: any) => {
+        console.error('🔴 Error al buscar:', err);
+        this.estudianteEncontrado = null;
+      },
+    });
+  }
+
+}

@@ -8,6 +8,30 @@
 
     <form class="modal-body" [formGroup]="formularioEstudiante" (ngSubmit)="guardarEstudiante()">
 
+      <div class="mb-3 form-group">
+        <label class="form-label d-block">Foto de Perfil</label>
+
+        <input
+          type="file"
+          #fileInput
+          (change)="capturarNombreArchivo($event)"
+          accept="image/*"
+          style="display: none;"
+        />
+
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fileInput.click()">
+            📷 Seleccionar Imagen
+          </button>
+
+          @if (formularioEstudiante.get('imagenUrl')?.value) {
+          <span class="form-group text-success small">
+        ✓ {{ formularioEstudiante.get('imagenUrl')?.value }}
+      </span>
+          }
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="documento">Documento de Identidad</label>
         <input type="text" id="documento" formControlName="documento" class="form-control" placeholder="Ej: 12345678">
