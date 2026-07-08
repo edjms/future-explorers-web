@@ -1,0 +1,41 @@
+<div class="modal-overlay" *ngIf="mostrar">
+  <div class="modal-contenedor">
+    <div class="modal-cabecera">
+      <h3>Registrar Recibo de Pago</h3>
+      <button class="btn-cerrar-modal" (click)="cerrar()">✕</button>
+    </div>
+
+    <div class="modal-cuerpo">
+      <p>Estudiante: <strong style="color: #1e293b;">{{ alumno?.nombreCompleto }}</strong></p>
+      <p>Documento: <strong style="color: #3b82f6;">{{ alumno?.documento }}</strong></p>
+      <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
+
+      <form (ngSubmit)="guardar()">
+        <div class="form-group">
+          <label>Fecha de Pago</label>
+          <input type="date" name="fechaPago" [(ngModel)]="nuevoPago.fechaPago" required class="form-control">
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;">
+          <label>Valor del Pago ($)</label>
+          <input type="number" name="monto" [(ngModel)]="nuevoPago.monto" required class="form-control" placeholder="Ej. 50000">
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;">
+          <label>Fecha de Vencimiento</label>
+          <input type="date" name="fechaVencimiento" [(ngModel)]="nuevoPago.fechaVencimiento" required class="form-control">
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;">
+          <label>Evidencia / Soporte de Pago</label>
+          <input type="text" name="evidencia" [(ngModel)]="nuevoPago.evidencia" class="form-control" placeholder="Ej. Ref Nequi 4829 o Recibo #045">
+        </div>
+
+        <div class="modal-acciones" style="margin-top: 25px; display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="btn-cancelar" (click)="cerrar()">Cancelar</button>
+          <button type="submit" class="btn-guardar">Registrar Pago</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

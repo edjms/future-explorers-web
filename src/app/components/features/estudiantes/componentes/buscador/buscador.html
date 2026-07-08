@@ -5,8 +5,8 @@
       type="text"
       class="input-busqueda"
       placeholder="Buscar estudiante por nombre, correo o cédula..."
-      [(ngModel)]="terminoBusqueda"
-      (keyup.enter)="ejecutarBusqueda()"
+      [(ngModel)]="filtroCedula"
+      (input)="onInput($event)"
     >
   </div>
 

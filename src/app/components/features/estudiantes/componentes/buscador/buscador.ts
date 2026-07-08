@@ -51,27 +51,18 @@ import { EstudianteService } from '../../servicios/estudiante';
 })
 export class Buscador {
   //@Output() alActualizar = new EventEmitter<void>();
-
+  @Output() alBuscar = new EventEmitter<string>();
+  filtroCedula: string = '';
   terminoBusqueda: string = '';
   estudianteEncontrado: any = null;
 
   constructor(private estudianteService: EstudianteService) {}
 
-  ejecutarBusqueda() {
-    if (!this.terminoBusqueda.trim()) {
-      this.estudianteEncontrado = null;
-      return;
+  onInput(evento: Event): void {
+    const inputElement = evento.target as HTMLInputElement;
+    if (inputElement) {
+      console.log('1. Buscador capturó texto:', inputElement.value);
+      this.alBuscar.emit(inputElement.value); // Envia el texto limpio
     }
-
-    this.estudianteService.obtenerEstudiantePorDocumento(this.terminoBusqueda).subscribe({
-      next: (resultado: any) => {
-        this.estudianteEncontrado = resultado;
-      },
-      error: (err: any) => {
-        console.error('🔴 Error al buscar:', err);
-        this.estudianteEncontrado = null;
-      },
-    });
   }
-
 }

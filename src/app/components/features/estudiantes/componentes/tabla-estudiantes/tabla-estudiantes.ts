@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EstudianteService, AlumnoPagoDTO } from '../../servicios/estudiante';
+import { ModalPago } from '../modal-pago/modal-pago';
 
 @Component({
   selector: 'app-tabla-estudiantes',
-  imports: [CommonModule],
+  imports: [CommonModule, ModalPago],
   templateUrl: './tabla-estudiantes.html',
   styles: `
     .tabla-container {
@@ -123,7 +124,7 @@ import { EstudianteService, AlumnoPagoDTO } from '../../servicios/estudiante';
 })
 export class TablaEstudiantes implements OnInit {
   alumnos: AlumnoPagoDTO[] = [];
-
+  alumnosFiltrados: AlumnoPagoDTO[] = [];
   // Variables para controlar la paginación
   paginaActual: number = 0;
   tamanoPagina: number = 6;
@@ -131,6 +132,9 @@ export class TablaEstudiantes implements OnInit {
   totalPaginas: number = 0;
 
   Math = Math;
+
+  mostrarModal: boolean = false;
+  alumnoParaPagar: any = null;
 
   constructor(
     private alumnoService: EstudianteService,
@@ -145,12 +149,11 @@ export class TablaEstudiantes implements OnInit {
     this.alumnoService.obtenerAlumnosPaginados(this.paginaActual, this.tamanoPagina).subscribe({
       next: (response: any) => {
         this.alumnos = response.content;
+        this.alumnosFiltrados = response.content;
         this.totalElementos = response.totalElements;
         this.totalPaginas = response.totalPages;
 
         console.log('Alumnos asignados correctamente:', this.alumnos);
-
-        // 👈 3. OBLIGA A ANGULAR A RENDERIZAR LA PANTALLA YA
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -158,6 +161,28 @@ export class TablaEstudiantes implements OnInit {
       },
     });
   }
+
+  public filtrar(cedula: string): void {
+    const busqueda = cedula.trim();
+    console.log('2. Tabla recibió la cédula:', busqueda);
+    console.log('3. Alumnos disponibles en la página:', this.alumnos);
+
+    if (!busqueda) {
+      this.alumnosFiltrados = this.alumnos; // Si limpia el buscador, regresan todos los de la página
+      return;
+    }
+
+    // Filtra sobre los alumnos de la página actual por su documento
+    this.alumnosFiltrados = this.alumnos.filter(
+      (alumno) => {
+        console.log('Revisando alumno documento:', alumno.documento);
+        return alumno.documento && alumno.documento.toString().includes(busqueda)
+      });
+    console.log('4. Alumnos que pasaron el filtro:', this.alumnosFiltrados);
+    this.cdr.detectChanges();
+  }
+
+
   paginaSiguiente(): void {
     console.log('--- Intentando ir a página siguiente ---');
     console.log('Página actual antes:', this.paginaActual);
@@ -168,7 +193,10 @@ export class TablaEstudiantes implements OnInit {
       console.log('Página cambió a:', this.paginaActual);
       this.cargarAlumnos();
     } else {
-      console.warn('No se cumplió la condición para avanzar:', `${this.paginaActual} < ${this.totalPaginas - 1}`);
+      console.warn(
+        'No se cumplió la condición para avanzar:',
+        `${this.paginaActual} < ${this.totalPaginas - 1}`,
+      );
     }
   }
 
@@ -177,5 +205,18 @@ export class TablaEstudiantes implements OnInit {
       this.paginaActual--;
       this.cargarAlumnos();
     }
+  }
+  abrirModalPago(alumno: any): void {
+    this.alumnoParaPagar = alumno;
+    this.mostrarModal = true;
+  }
+
+  cerrarModalPago(): void {
+    this.mostrarModal = false;
+    this.alumnoParaPagar = null;
+  }
+
+  recargarTablaPorPago(): void {
+    this.cargarAlumnos(); // O el método que uses para refrescar los datos de la tabla
   }
 }

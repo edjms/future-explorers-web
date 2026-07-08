@@ -2,8 +2,8 @@
 <div class="pantalla-estudiantes-container">
 
   <app-cabecera (alHacerClicRegistrar)="abrirFormulario()"></app-cabecera>
-  <app-buscador></app-buscador>
-  <app-tabla-estudiantes></app-tabla-estudiantes>
+  <app-buscador (alBuscar)="tabla.filtrar($event)"></app-buscador>
+  <app-tabla-estudiantes #tabla></app-tabla-estudiantes>
 
   @if (mostrarModal) {
     <app-formulario-estudiante (cerrar)="cerrarFormulario()"></app-formulario-estudiante>

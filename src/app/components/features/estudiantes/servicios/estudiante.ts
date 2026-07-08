@@ -23,7 +23,7 @@ export interface PaginaSpring<T> {
 }
 
 @Injectable({
-  providedIn: 'root', // 👈 Esto es lo que le dice a Angular que es un servicio global
+  providedIn: 'root',
 })
 export class EstudianteService {
   private endpoint = `${environment.apiUrl}/estudiantes`;
