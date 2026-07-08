@@ -2,10 +2,11 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EstudianteService, AlumnoPagoDTO } from '../../servicios/estudiante';
 import { ModalPago } from '../modal-pago/modal-pago';
+import { ModalEditar } from '../modal-editar/modal-editar';
 
 @Component({
   selector: 'app-tabla-estudiantes',
-  imports: [CommonModule, ModalPago],
+  imports: [CommonModule, ModalPago,ModalEditar],
   templateUrl: './tabla-estudiantes.html',
   styles: `
     .tabla-container {
@@ -125,6 +126,9 @@ import { ModalPago } from '../modal-pago/modal-pago';
 export class TablaEstudiantes implements OnInit {
   alumnos: AlumnoPagoDTO[] = [];
   alumnosFiltrados: AlumnoPagoDTO[] = [];
+
+  mostrarModalEditar: boolean = false;
+  alumnoParaEditar: AlumnoPagoDTO | null = null;
   // Variables para controlar la paginación
   paginaActual: number = 0;
   tamanoPagina: number = 6;
@@ -173,15 +177,13 @@ export class TablaEstudiantes implements OnInit {
     }
 
     // Filtra sobre los alumnos de la página actual por su documento
-    this.alumnosFiltrados = this.alumnos.filter(
-      (alumno) => {
-        console.log('Revisando alumno documento:', alumno.documento);
-        return alumno.documento && alumno.documento.toString().includes(busqueda)
-      });
+    this.alumnosFiltrados = this.alumnos.filter((alumno) => {
+      console.log('Revisando alumno documento:', alumno.documento);
+      return alumno.documento && alumno.documento.toString().includes(busqueda);
+    });
     console.log('4. Alumnos que pasaron el filtro:', this.alumnosFiltrados);
     this.cdr.detectChanges();
   }
-
 
   paginaSiguiente(): void {
     console.log('--- Intentando ir a página siguiente ---');
@@ -218,5 +220,22 @@ export class TablaEstudiantes implements OnInit {
 
   recargarTablaPorPago(): void {
     this.cargarAlumnos(); // O el método que uses para refrescar los datos de la tabla
+  }
+
+  abrirEditarEstudiante(alumno: AlumnoPagoDTO): void {
+    this.alumnoParaEditar = alumno;
+    this.mostrarModalEditar = true;
+    console.log('Estudiante seleccionado para editar:', this.alumnoParaEditar);
+  }
+
+  // 🎯 NUEVO MÉTODO: Para cuando cierren el formulario o cancelen
+  cerrarModalEditar(): void {
+    this.mostrarModalEditar = false;
+    this.alumnoParaEditar = null;
+  }
+
+  // 🎯 NUEVO MÉTODO: Para refrescar la tabla cuando terminen de guardar en el backend
+  recargarTablaPorEdicion(): void {
+    this.cargarAlumnos();
   }
 }

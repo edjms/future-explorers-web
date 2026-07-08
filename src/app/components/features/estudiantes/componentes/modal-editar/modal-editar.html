@@ -1,0 +1,60 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h3>✏️ Modificar Ficha del Estudiante</h3>
+    <hr>
+
+    <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario-grid">
+
+      <div class="form-group">
+        <label>Documento (Cédula)</label>
+        <input type="text" formControlName="documento" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" formControlName="email" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" formControlName="nombre" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Apellido</label>
+        <input type="text" formControlName="apellido" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Fecha de Nacimiento</label>
+        <input type="date" formControlName="fechaNacimiento" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Profesor Asignado</label>
+        <select formControlName="profesorId" class="form-control">
+          <option value="">Seleccione un profesor...</option>
+          <option value="1">Profesor de prueba (ID: 1)</option>
+        </select>
+      </div>
+
+      <div class="form-group col-full">
+        <label>URL de la Foto / Imagen</label>
+        <input type="text" formControlName="imagenUrl" class="form-control" placeholder="Ej: http://ruta-imagen.com/foto.jpg">
+      </div>
+
+      <div class="form-group checkbox-group col-full">
+        <label class="switch-label">
+          <input type="checkbox" formControlName="activo">
+          Estudiante Activo en la plataforma
+        </label>
+      </div>
+
+      <div class="botones-acciones col-full">
+        <button type="button" (click)="cancelar()" class="btn-cancelar">Cancelar</button>
+        <button type="submit" [disabled]="form.invalid" class="btn-guardar">Guardar Cambios</button>
+      </div>
+
+    </form>
+  </div>
+</div>
