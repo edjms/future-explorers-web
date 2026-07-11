@@ -1,70 +1,79 @@
-<div class="modal-backdrop">
-  <div class="modal-content">
+<div class="modal-overlay">
+  <div class="modal-wrapper">
 
     <div class="modal-header">
-      <h2>Registrar Nuevo Explorador</h2>
-      <button class="btn-cerrar-x" (click)="cerrar.emit()">✕</button>
+      <h2>Registrar Nuevo Estudiante</h2>
+      <button type="button" class="btn-close-x" (click)="cerrar.emit()">✕</button>
     </div>
 
-    <form class="modal-body" [formGroup]="formularioEstudiante" (ngSubmit)="guardarEstudiante()">
+    <form [formGroup]="formularioEstudiante" (ngSubmit)="guardarEstudiante()">
+      <div class="modal-body-form">
 
-      <div class="mb-3 form-group">
-        <label class="form-label d-block">Foto de Perfil</label>
+        <div class="avatar-section">
+          <div class="avatar-box">
 
-        <input
-          type="file"
-          #fileInput
-          (change)="capturarNombreArchivo($event)"
-          accept="image/*"
-          style="display: none;"
-        />
+            <div *ngIf="!imagenPreview" class="avatar-placeholder">
+              <span style="font-size: 2.5rem;">👤</span>
+              <span style="font-size: 0.8rem; font-weight: 500;">Sin foto</span>
+            </div>
 
-        <div class="d-flex align-items-center gap-2">
-          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fileInput.click()">
-            📷 Seleccionar Imagen
-          </button>
+            <img *ngIf="imagenPreview" [src]="imagenPreview" alt="Vista previa" class="avatar-img">
 
-          @if (formularioEstudiante.get('imagenUrl')?.value) {
-          <span class="form-group text-success small">
-        ✓ {{ formularioEstudiante.get('imagenUrl')?.value }}
-      </span>
-          }
+          </div>
+
+          <label class="file-input-label">
+            Seleccionar Foto
+            <input type="file" (change)="capturarNombreArchivo($event)" style="display: none;" accept="image/*">
+          </label>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="documento">Documento de Identidad</label>
-        <input type="text" id="documento" formControlName="documento" class="form-control" placeholder="Ej: 12345678">
-      </div>
+        <div class="fields-grid">
 
-      <div class="form-group">
-        <label for="nombre">Nombre Completo</label>
-        <input type="text" id="nombre" formControlName="nombre" placeholder="Ej. Juan Pérez">
-      </div>
+          <div class="form-group">
+            <label>Documento / Identificación</label>
+            <input type="text" class="form-control" formControlName="documento" placeholder="Ej: 10023456">
+          </div>
 
-      <div class="form-group">
-        <label for="apellido">Apellido</label>
-        <input type="text" id="apellido" formControlName="apellido" class="form-control" placeholder="Ej: Mazo">
-      </div>
+          <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input type="email" class="form-control" formControlName="correo" placeholder="ejemplo@correo.com">
+          </div>
 
-      <div class="form-group">
-        <label for="correo">Correo Electrónico</label>
-        <input type="email" id="correo" formControlName="correo" placeholder="Ej. juan.perez&#64;mail.com">
-      </div>
+          <div class="form-group">
+            <label>Nombres</label>
+            <input type="text" class="form-control" formControlName="nombre" placeholder="Primer y segundo nombre">
+          </div>
 
-      <div class="form-group">
-        <label for="estado">Estado Inicial</label>
-        <select id="estado" formControlName="estado">
-          <option value="true">Activo</option>
-          <option value="false">Inactivo</option>
-        </select>
+          <div class="form-group">
+            <label>Apellidos</label>
+            <input type="text" class="form-control" formControlName="apellido" placeholder="Apellidos completos">
+          </div>
+
+          <div class="form-group">
+            <label>Profesor Asignado</label>
+            <select class="form-control" formControlName="profesorId">
+              <option value="" disabled selected>Seleccione un profesor</option>
+              <option *ngFor="let prof of listaProfesores" [value]="prof.id">
+                {{ prof.nombre }} {{ prof.apellido }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Estado Inicial</label>
+            <select class="form-control" formControlName="estado">
+              <option [value]="true">Activo</option>
+              <option [value]="false">Inactivo / Bloqueado</option>
+            </select>
+          </div>
+
+        </div>
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn-cancelar" (click)="cerrar.emit()">Cancelar</button>
         <button type="submit" class="btn-guardar">Guardar Estudiante</button>
       </div>
-
     </form>
 
   </div>

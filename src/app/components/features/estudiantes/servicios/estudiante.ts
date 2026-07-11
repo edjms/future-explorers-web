@@ -46,4 +46,9 @@ export class EstudianteService {
 
     return this.http.get<PaginaSpring<AlumnoPagoDTO>>(`${this.endpoint}/paginacion`, { params: params });
   }
+
+  actualizarEstudiante(id: number, estudiante: any): Observable<any> {
+    return this.http.put(`${this.endpoint}/${id}`, estudiante);
+  }
+
 }

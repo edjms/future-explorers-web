@@ -1,60 +1,83 @@
 <div class="modal-backdrop">
   <div class="modal-content">
-    <h3>✏️ Modificar Ficha del Estudiante</h3>
-    <hr>
 
-    <form [formGroup]="form" (ngSubmit)="guardar()" class="formulario-grid">
+    <div class="modal-header">
+      <h3 style="margin: 0; font-size: 1.3rem; color: #1e293b; font-weight: 600;">Editar Datos del Estudiante</h3>
+      <button type="button" (click)="cancelar()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #64748b;">✕</button>
+    </div>
 
-      <div class="form-group">
-        <label>Documento (Cédula)</label>
-        <input type="text" formControlName="documento" class="form-control">
+    <form [formGroup]="form" (ngSubmit)="guardarCambios()">
+      <div class="modal-body-form">
+
+        <div class="avatar-section">
+          <div class="avatar-box">
+
+            <div *ngIf="!imagenPreview && !form.get('imagenUrl')?.value" class="avatar-placeholder">
+              <span style="font-size: 2.5rem;">👤</span>
+              <span style="font-size: 0.8rem; font-weight: 500;">Sin foto</span>
+            </div>
+
+            <img *ngIf="imagenPreview || (form.get('imagenUrl')?.value && form.get('imagenUrl')?.value !== 'no se tiene aun')"
+                 [src]="imagenPreview || 'fotos-alumnos/' + form.get('imagenUrl')?.value"
+                 alt="Foto del estudiante"
+                 class="avatar-img">
+
+          </div>
+
+          <label class="file-input-label">
+            Cambiar Foto
+            <input type="file" (change)="capturarNombreArchivo($event)" style="display: none;" accept="image/*">
+          </label>
+        </div>
+
+        <div class="formulario-grid">
+
+          <div class="form-group">
+            <label style="font-weight: 500; color: #475569;">Documento</label>
+            <input type="text" class="form-control" formControlName="documento">
+          </div>
+
+          <div class="form-group">
+            <label style="font-weight: 500; color: #475569;">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre">
+          </div>
+
+          <div class="form-group">
+            <label style="font-weight: 500; color: #475569;">Apellido</label>
+            <input type="text" class="form-control" formControlName="apellido">
+          </div>
+
+          <div class="form-group">
+            <label style="font-weight: 500; color: #475569;">Email</label>
+            <input type="email" class="form-control" formControlName="email">
+          </div>
+
+          <div class="form-group">
+            <label style="font-weight: 500; color: #475569;">Profesor Asignado</label>
+            <select class="form-control" formControlName="profesorId">
+              <option value="">Seleccione un profesor</option>
+              <option *ngFor="let prof of listaProfesores" [value]="prof.id">
+                {{ prof.nombre }} {{ prof.apellido }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label style="font-weight: 500; color: #475569;">Estado</label>
+            <select class="form-control" formControlName="activo">
+              <option [ngValue]="true">Activo</option>
+              <option [ngValue]="false">Inactivo</option>
+            </select>
+          </div>
+
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Correo Electrónico</label>
-        <input type="email" formControlName="email" class="form-control">
+      <div class="modal-footer">
+        <button type="button" class="btn-cancelar" (click)="cancelar()" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; font-weight: 500;">Cancelar</button>
+        <button type="submit" class="btn-guardar" [disabled]="form.invalid" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: none; background: #2563eb; color: white; cursor: pointer; font-weight: 500;">Guardar Cambios</button>
       </div>
-
-      <div class="form-group">
-        <label>Nombre</label>
-        <input type="text" formControlName="nombre" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Apellido</label>
-        <input type="text" formControlName="apellido" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Fecha de Nacimiento</label>
-        <input type="date" formControlName="fechaNacimiento" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label>Profesor Asignado</label>
-        <select formControlName="profesorId" class="form-control">
-          <option value="">Seleccione un profesor...</option>
-          <option value="1">Profesor de prueba (ID: 1)</option>
-        </select>
-      </div>
-
-      <div class="form-group col-full">
-        <label>URL de la Foto / Imagen</label>
-        <input type="text" formControlName="imagenUrl" class="form-control" placeholder="Ej: http://ruta-imagen.com/foto.jpg">
-      </div>
-
-      <div class="form-group checkbox-group col-full">
-        <label class="switch-label">
-          <input type="checkbox" formControlName="activo">
-          Estudiante Activo en la plataforma
-        </label>
-      </div>
-
-      <div class="botones-acciones col-full">
-        <button type="button" (click)="cancelar()" class="btn-cancelar">Cancelar</button>
-        <button type="submit" [disabled]="form.invalid" class="btn-guardar">Guardar Cambios</button>
-      </div>
-
     </form>
+
   </div>
 </div>

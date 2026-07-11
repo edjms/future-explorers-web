@@ -1,35 +1,147 @@
 
+/* Fondo oscuro traslúcido elegante */
 .modal-backdrop {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.4); /* Un fondo oscuro más sutil */
-  backdrop-filter: blur(4px); /* Suaviza el fondo de la tabla */
-  display: flex; justify-content: center; align-items: center; z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
+/* Contenedor principal del Modal */
 .modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 16px; /* Bordes más modernos */
+  background: #ffffff;
   width: 90%;
-  max-width: 650px; /* 🎯 ANCHO AMPLIO: Le da espacio de sobra a los datos */
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-width: 850px;
+  border-radius: 16px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  padding: 0; /* Quitamos el padding global para estructurarlo por secciones */
+  animation: fadeIn 0.3s ease-out;
 }
 
-/* 🎯 DISEÑO EN DOS COLUMNAS: Los campos no se amontonan hacia abajo */
+.modal-header {
+  background: #f8fafc;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Distribución en 2 Columnas (Izquierda: Foto, Derecha: Inputs) */
+.modal-body-form {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2rem;
+}
+
+/* Sección del Avatar Circular */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-right: 1px solid #f1f5f9;
+  padding-right: 2rem;
+}
+
+.avatar-box {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px dashed #cbd5e1;
+  background: #f8fafc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.avatar-box:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.file-input-label {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.file-input-label:hover {
+  background: #e2e8f0;
+}
+
+/* Grid interna de los campos (2 por fila) */
 .formulario-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.2rem;
-  margin-top: 1.5rem;
 }
 
-/* Para que campos largos (como el nombre completo) ocupen todo el ancho */
-.col-full {
-  grid-column: span 2;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 .form-control {
-  padding: 0.65rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;
+  padding: 0.65rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #334155;
+  background-color: #ffffff;
+  transition: border-color 0.2s;
 }
 
+.form-control:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Footer del Modal */
+.modal-footer {
+  padding: 1.25rem 2rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

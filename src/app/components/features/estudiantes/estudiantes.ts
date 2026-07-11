@@ -15,7 +15,7 @@ export class Estudiantes {
 
   //@ViewChild(TablaEstudiantes) tablaEstudiantes!: TablaEstudiantes;
 
-/*
+  /*
   refrescarTablaDesdeBuscador(): void {
     if (this.tablaEstudiantes) {
       this.tablaEstudiantes.cargarAlumnos(); // ¡Llamamos al método que sí existe en la tabla!

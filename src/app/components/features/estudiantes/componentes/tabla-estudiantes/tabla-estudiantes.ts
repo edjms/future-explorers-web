@@ -161,6 +161,7 @@ export class TablaEstudiantes implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
+        alert('¡Error de conexión!: ' + JSON.stringify(err));
         console.error('Error al cargar alumnos paginados', err);
       },
     });
