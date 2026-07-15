@@ -10,7 +10,7 @@ import { EstudianteService } from '../../servicios/estudiante';
   templateUrl: './buscador.html',
   styles: `
     .buscador-container {
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       width: 100%;
     }
 

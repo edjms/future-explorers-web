@@ -32,6 +32,7 @@
   margin: 0;
   color: #1e293b;
   font-size: 1.2rem;
+  font-weight: 600; /* ✨ Un toque más de peso al título */
 }
 
 .btn-cerrar-modal {
@@ -40,7 +41,31 @@
   font-size: 18px;
   color: #94a3b8;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
+
+.btn-cerrar-modal:hover {
+  color: #64748b; /* ✨ Efecto hover sutil al cerrar */
+}
+
+/* ==========================================
+   ✨ NUEVA: Caja informativa del Estudiante
+   ========================================== */
+.info-estudiante-pago {
+  background-color: #f8fafc; /* Gris azulado idéntico al de tu tabla */
+  border-left: 4px solid #007bff; /* El azul rey de tu botón principal */
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.info-estudiante-pago p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #334155;
+}
+
+/* ========================================== */
 
 .form-group label {
   display: block;
@@ -56,11 +81,15 @@
   border: 1px solid #cbd5e1;
   border-radius: 6px;
   box-sizing: border-box;
+  color: #1e293b;
+  font-size: 14px;
+  transition: all 0.2s ease; /* ✨ Suaviza el cambio de color al hacer clic */
 }
 
 .form-control:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: #007bff; /* 🎯 Cambiado a tu azul rey institucional */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); /* ✨ Destello azul moderno */
 }
 
 .btn-cancelar {
@@ -70,18 +99,27 @@
   padding: 10px 16px;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #e2e8f0; /* ✨ Hover un poco más marcado y limpio */
 }
 
 .btn-guardar {
-  background-color: #16a34a;
+  background-color: #007bff; /* 🎯 ¡Adiós verde chillón! Ahora es tu Azul Rey principal */
   color: #ffffff;
   border: none;
   padding: 10px 16px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.15); /* ✨ Sombra sutil para darle profundidad */
+  transition: all 0.2s ease;
 }
 
 .btn-guardar:hover {
-  background-color: #15803d;
+  background-color: #0056b3; /* 🎯 Azul más oscuro al pasar el mouse */
+  transform: translateY(-1px); /* ✨ Efecto sutil de levante */
 }

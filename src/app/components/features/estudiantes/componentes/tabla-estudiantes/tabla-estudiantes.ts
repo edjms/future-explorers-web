@@ -30,15 +30,17 @@ import { ModalEditar } from '../modal-editar/modal-editar';
     .tabla-estudiantes th {
       background-color: #f8fafc;
       color: #475569;
-      font-weight: 600;
+      font-weight: 400;
       padding: 1rem 1.5rem;
       border-bottom: 2px solid #e2e8f0;
     }
 
     .tabla-estudiantes td {
-      padding: 1rem 1.5rem;
+      padding: 0.5rem 0.75rem; /* Reducido a la mitad arriba/abajo y un poco a los lados */
       border-bottom: 1px solid #f1f5f9;
       color: #334155;
+      font-size: 0.88rem; /* Tamaño de letra ligeramente más pequeño y muy legible */
+      vertical-align: middle; /* Alinea el texto perfectamente al centro vertical */
     }
 
     /* Efecto Hover en las filas */
@@ -168,19 +170,21 @@ export class TablaEstudiantes implements OnInit {
   }
 
   public filtrar(cedula: string): void {
-    const busqueda = cedula.trim();
+    const busqueda = (cedula || '').toString().trim();
     console.log('2. Tabla recibió la cédula:', busqueda);
     console.log('3. Alumnos disponibles en la página:', this.alumnos);
 
-    if (!busqueda) {
+    if (!busqueda || busqueda === '') {
+      console.log('Buscador vacío. Restaurando lista completa local...');
       this.alumnosFiltrados = this.alumnos; // Si limpia el buscador, regresan todos los de la página
+      this.cdr.detectChanges();
       return;
     }
 
     // Filtra sobre los alumnos de la página actual por su documento
     this.alumnosFiltrados = this.alumnos.filter((alumno) => {
-      console.log('Revisando alumno documento:', alumno.documento);
-      return alumno.documento && alumno.documento.toString().includes(busqueda);
+      const docAlumno = alumno.documento ? alumno.documento.toString().trim() : '';
+      return docAlumno.includes(busqueda);
     });
     console.log('4. Alumnos que pasaron el filtro:', this.alumnosFiltrados);
     this.cdr.detectChanges();

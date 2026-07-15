@@ -1,0 +1,275 @@
+/* --- CONTENEDOR PRINCIPAL (Equilibrado para una sola pantalla) --- */
+.finanzas-container {
+  padding: 1.25rem 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.header-seccion h2 {
+  font-size: 1.7rem; /* Un poco más imponente */
+  margin: 0;
+  color: #1a202c;
+  font-weight: 700;
+}
+
+.header-seccion p {
+  color: #718096;
+  margin: 0.2rem 0 0 0;
+  font-size: 0.9rem;
+}
+
+/* --- REJILLA Y TARJETAS PRINCIPALES --- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem; /* Separación ideal */
+  margin-top: 1.25rem;
+}
+
+.card-modulo {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  padding: 1.25rem; /* Espaciado interno cómodo */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #edf2f7;
+}
+
+.card-header-info {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.icon-box {
+  font-size: 1.6rem; /* Icono más visible */
+  padding: 0.65rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-box.balance {
+  background-color: rgba(72, 187, 120, 0.1);
+}
+
+.icon-box.gastos {
+  background-color: rgba(66, 153, 225, 0.1);
+}
+
+.card-title-text h4 {
+  font-size: 1.15rem; /* Texto de título más claro */
+  margin: 0;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.card-title-text small {
+  color: #718096;
+  font-size: 0.8rem;
+}
+
+.card-descripcion {
+  color: #4a5568;
+  line-height: 1.5;
+  margin: 1rem 0;
+  font-size: 0.88rem; /* Lectura cómoda */
+}
+
+/* --- FORMULARIO DE FECHAS --- */
+.form-fechas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 0.75rem 0;
+}
+
+.input-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.input-grupo label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.input-custom {
+  padding: 0.55rem; /* Inputs un poco más altos para que sea fácil dar click */
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #2d3748;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-custom:focus {
+  border-color: #4299e1;
+}
+
+/* --- BOTONES --- */
+.btn-financiero {
+  width: 100%;
+  padding: 0.65rem; /* Botón con mejor presencia */
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-financiero:active {
+  transform: scale(0.98);
+}
+
+.btn-financiero.success {
+  background-color: #48bb78;
+  color: black;
+}
+
+.btn-financiero.success:hover {
+  background-color: #38a169;
+}
+
+.btn-financiero.primary {
+  background-color: #4299e1;
+  color: black;
+}
+
+.btn-financiero.primary:hover {
+  background-color: #3182ce;
+}
+
+/* --- SECCIÓN DE RESULTADOS (EQUILIBRADA) --- */
+.resultados-seccion {
+  margin-top: 2rem; /* Separación justa */
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.resultados-seccion h3 {
+  color: #1e293b;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.resultados-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Tarjetas de KPI con tamaño perfecto */
+.kpi-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.1rem 1.4rem; /* Un espacio interno sumamente elegante */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px -1px rgba(148, 163, 184, 0.05), 0 2px 4px -1px rgba(148, 163, 184, 0.03);
+  border: 1px solid #f1f5f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(148, 163, 184, 0.08);
+}
+
+.kpi-contenido {
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-card .lbl-kpi {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.03em;
+}
+
+.kpi-card .val-kpi {
+  font-size: 1.7rem; /* ¡Mucho más legible y vistoso! */
+  font-weight: 800;
+  margin: 0.3rem 0;
+  letter-spacing: -0.02em;
+}
+
+.kpi-card .sub-kpi {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* Iconos de las tarjetas de resultados */
+.kpi-icon {
+  width: 42px; /* Tamaño medio ideal */
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+/* --- COLORES Y GRADIENTES --- */
+.kpi-card.ingresos {
+  background: linear-gradient(135deg, #ffffff 0%, #f4fbf7 100%);
+  border-left: 5px solid #22c55e;
+}
+.kpi-card.ingresos .val-kpi { color: #15803d; }
+.kpi-card.ingresos .kpi-icon {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.kpi-card.gastos {
+  background: linear-gradient(135deg, #ffffff 0%, #fffafa 100%);
+  border-left: 5px solid #ef4444;
+}
+.kpi-card.gastos .val-kpi { color: #b91c1c; }
+.kpi-card.gastos .kpi-icon {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.kpi-card.neto-positivo {
+  background: linear-gradient(135deg, #ffffff 0%, #f5faff 100%);
+  border-left: 5px solid #3b82f6;
+}
+.kpi-card.neto-positivo .val-kpi { color: #1d4ed8; }
+.kpi-card.neto-positivo .kpi-icon {
+  background-color: #e0f2fe;
+  color: #1e40af;
+}
+
+.kpi-card.neto-negativo {
+  background: linear-gradient(135deg, #ffffff 0%, #fffbf7 100%);
+  border-left: 5px solid #f97316;
+}
+.kpi-card.neto-negativo .val-kpi { color: #c2410c; }
+.kpi-card.neto-negativo .kpi-icon {
+  background-color: #ffedd5;
+  color: #9a3412;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

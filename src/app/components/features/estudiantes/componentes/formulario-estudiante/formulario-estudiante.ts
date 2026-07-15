@@ -140,7 +140,7 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
     .fields-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      gap: 1.5rem;
     }
 
     .form-group {
@@ -177,7 +177,7 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
 
     /* Footer de Acciones */
     .modal-footer {
-      padding: 1.25rem 2rem;
+      padding: 1rem 1rem;
       background: #f8fafc;
       border-top: 1px solid #e2e8f0;
       display: flex;

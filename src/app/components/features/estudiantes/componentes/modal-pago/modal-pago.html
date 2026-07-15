@@ -6,8 +6,8 @@
     </div>
 
     <div class="modal-cuerpo">
-      <p>Estudiante: <strong style="color: #1e293b;">{{ alumno?.nombreCompleto }}</strong></p>
-      <p>Documento: <strong style="color: #3b82f6;">{{ alumno?.documento }}</strong></p>
+      <p><strong>Estudiante:</strong> <span style="text-transform: capitalize;">esteban mazo</span></p>
+      <p><strong>Documento:</strong> <span style="color: #007bff; font-weight: 600;">90900300</span></p>
       <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
 
       <form (ngSubmit)="guardar()">
@@ -33,7 +33,7 @@
 
         <div class="modal-acciones" style="margin-top: 25px; display: flex; justify-content: flex-end; gap: 10px;">
           <button type="button" class="btn-cancelar" (click)="cerrar()">Cancelar</button>
-          <button type="submit" class="btn-guardar">Registrar Pago</button>
+          <button type="submit" class="btn-registrar">Registrar Pago</button>
         </div>
       </form>
     </div>

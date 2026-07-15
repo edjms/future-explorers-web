@@ -1,0 +1,94 @@
+<div class="finanzas-container">
+
+  <header class="header-seccion">
+    <h2>Módulo Financiero</h2>
+    <p>Gestiona el flujo de caja, consulta balances y controla los egresos de la academia.</p>
+  </header>
+
+  <section class="cards-grid">
+
+    <article class="card-modulo">
+      <div class="card-header-info">
+        <div class="icon-box balance">📊</div>
+        <div class="card-title-text">
+          <h4>Consultar Balance</h4>
+          <small>Revisa ingresos vs gastos por fechas</small>
+        </div>
+      </div>
+
+      <div class="form-fechas">
+        <div class="input-grupo">
+          <label>Fecha Inicio</label>
+          <input type="date" class="input-custom" [(ngModel)]="fechaInicio">
+        </div>
+        <div class="input-grupo">
+          <label>Fecha Fin</label>
+          <input type="date" class="input-custom" [(ngModel)]="fechaFin">
+        </div>
+      </div>
+
+      <button class="btn-financiero success" (click)="generarBalance()">
+        🔎 Generar Balance Financiero
+      </button>
+    </article>
+
+    <article class="card-modulo">
+      <div class="card-header-info">
+        <div class="icon-box gastos">💸</div>
+        <div class="card-title-text">
+          <h4>Sistema de Gastos</h4>
+          <small>Control completo de egresos operativos</small>
+        </div>
+      </div>
+
+      <p class="card-descripcion">
+        Accede al listado general de egresos. Desde aquí podrás registrar nuevos gastos operativos de la academia, clasificarlos por categorías y aplicar anulaciones bajo auditoría.
+      </p>
+
+      <button class="btn-financiero primary" (click)="irAGestionarGastos()">
+        ⚙️ Gestionar Gastos
+      </button>
+    </article>
+
+  </section>
+
+  @if (mostrarReporte()) {
+  <section class="resultados-seccion">
+    <h3>Resultados del Periodo</h3>
+
+    <div class="resultados-grid">
+
+      <div class="kpi-card ingresos">
+        <div class="kpi-contenido">
+          <span class="lbl-kpi">Total Ingresos</span>
+          <span class="val-kpi">${{ reporteData().totalIngresos | number:'1.2-2' }}</span>
+          <span class="sub-kpi">📈 {{ reporteData().cantidadPagos }} abonos recibidos</span>
+        </div>
+        <div class="kpi-icon">💰</div>
+      </div>
+
+      <div class="kpi-card gastos">
+        <div class="kpi-contenido">
+          <span class="lbl-kpi">Total Gastos</span>
+          <span class="val-kpi">${{ reporteData().totalGastos | number:'1.2-2' }}</span>
+          <span class="sub-kpi">📉 {{ reporteData().cantidadGastos }} egresos activos</span>
+        </div>
+        <div class="kpi-icon">💸</div>
+      </div>
+
+      <div class="kpi-card" [class.neto-positivo]="reporteData().balanceNeto >= 0" [class.neto-negativo]="reporteData().balanceNeto < 0">
+        <div class="kpi-contenido">
+          <span class="lbl-kpi">Balance Neto</span>
+          <span class="val-kpi">${{ reporteData().balanceNeto | number:'1.2-2' }}</span>
+          <span class="sub-kpi">⚖️ Rendimiento neto real</span>
+        </div>
+        <div class="kpi-icon">
+          {{ reporteData().balanceNeto >= 0 ? '🏆' : '⚠️' }}
+        </div>
+      </div>
+
+    </div>
+  </section>
+  }
+
+</div>

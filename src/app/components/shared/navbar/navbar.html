@@ -7,9 +7,23 @@
 
   <!-- 2. Menú de Navegación Central -->
   <ul class="navbar-menu">
-    <li><a href="#" class="menu-item">Inicio</a></li>
-    <li><a href="#" class="menu-item active">Estudiantes</a></li>
-    <li><a href="#" class="menu-item">Cursos</a></li>
+    <li>
+      <a (click)="cambiarModulo('inicio')"
+         class="menu-item"
+         [class.active]="moduloActivo() === 'inicio'">Inicio</a>
+    </li>
+
+    <li>
+      <a (click)="cambiarModulo('estudiantes')"
+         class="menu-item"
+         [class.active]="moduloActivo() === 'estudiantes'">Estudiantes</a>
+    </li>
+
+    <li>
+      <a (click)="cambiarModulo('finanzas')"
+         class="menu-item"
+         [class.active]="moduloActivo() === 'finanzas'">Finanzas</a>
+    </li>
   </ul>
 
   <!-- 3. Zona de Usuario (Derecha) -->
@@ -18,3 +32,13 @@
     <span class="user-name">Esteban (Admin)</span>
   </div>
 </nav>
+
+<main class="content-container">
+  @if (moduloActivo() === 'estudiantes') {
+  <app-estudiantes></app-estudiantes>
+  }
+
+  @if (moduloActivo() === 'finanzas') {
+  <app-finanzas></app-finanzas>
+  }
+</main>

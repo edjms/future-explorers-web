@@ -12,14 +12,19 @@
         <div class="avatar-section">
           <div class="avatar-box">
 
-            <div *ngIf="!imagenPreview && !form.get('imagenUrl')?.value" class="avatar-placeholder">
+            <div *ngIf="!imagenPreview && (!form.get('imagenUrl')?.value || form.get('imagenUrl')?.value === 'no se tiene aun')" class="avatar-placeholder">
               <span style="font-size: 2.5rem;">👤</span>
               <span style="font-size: 0.8rem; font-weight: 500;">Sin foto</span>
             </div>
 
-            <img *ngIf="imagenPreview || (form.get('imagenUrl')?.value && form.get('imagenUrl')?.value !== 'no se tiene aun')"
-                 [src]="imagenPreview || 'fotos-alumnos/' + form.get('imagenUrl')?.value"
-                 alt="Foto del estudiante"
+            <img *ngIf="imagenPreview"
+                 [src]="imagenPreview"
+                 alt="Vista previa de la nueva foto"
+                 class="avatar-img">
+
+            <img *ngIf="!imagenPreview && (form.get('imagenUrl')?.value && form.get('imagenUrl')?.value !== 'no se tiene aun')"
+                 [src]="'fotos-alumnos/' + form.get('imagenUrl')?.value"
+                 alt="Foto actual del estudiante"
                  class="avatar-img">
 
           </div>
@@ -75,7 +80,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn-cancelar" (click)="cancelar()" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; font-weight: 500;">Cancelar</button>
-        <button type="submit" class="btn-guardar" [disabled]="form.invalid" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: none; background: #2563eb; color: white; cursor: pointer; font-weight: 500;">Guardar Cambios</button>
+        <button type="submit" class="btn-registrar">Guardar Cambios</button>
       </div>
     </form>
 
