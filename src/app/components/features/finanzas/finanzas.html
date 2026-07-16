@@ -5,6 +5,8 @@
     <p>Gestiona el flujo de caja, consulta balances y controla los egresos de la academia.</p>
   </header>
 
+  @if (vistaActual() === 'dashboard') {
+
   <section class="cards-grid">
 
     <article class="card-modulo">
@@ -12,7 +14,7 @@
         <div class="icon-box balance">📊</div>
         <div class="card-title-text">
           <h4>Consultar Balance</h4>
-          <small>Revisa ingresos vs gastos por fechas</small>
+          <small>Revisa ingresos vs Egresos por fechas</small>
         </div>
       </div>
 
@@ -36,7 +38,7 @@
       <div class="card-header-info">
         <div class="icon-box gastos">💸</div>
         <div class="card-title-text">
-          <h4>Sistema de Gastos</h4>
+          <h4>Sistema de Egresos</h4>
           <small>Control completo de egresos operativos</small>
         </div>
       </div>
@@ -46,7 +48,7 @@
       </p>
 
       <button class="btn-financiero primary" (click)="irAGestionarGastos()">
-        ⚙️ Gestionar Gastos
+        ⚙️ Gestionar Egresos
       </button>
     </article>
 
@@ -69,7 +71,7 @@
 
       <div class="kpi-card gastos">
         <div class="kpi-contenido">
-          <span class="lbl-kpi">Total Gastos</span>
+          <span class="lbl-kpi">Total Egresos</span>
           <span class="val-kpi">${{ reporteData().totalGastos | number:'1.2-2' }}</span>
           <span class="sub-kpi">📉 {{ reporteData().cantidadGastos }} egresos activos</span>
         </div>
@@ -89,6 +91,12 @@
 
     </div>
   </section>
+  }
+
+  }
+
+  @else if (vistaActual() === 'gestion') {
+  <app-gestion-gastos (volver)="volverAlDashboard()"></app-gestion-gastos>
   }
 
 </div>

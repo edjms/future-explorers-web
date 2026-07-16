@@ -8,121 +8,129 @@ import { ModalEditar } from '../modal-editar/modal-editar';
   selector: 'app-tabla-estudiantes',
   imports: [CommonModule, ModalPago,ModalEditar],
   templateUrl: './tabla-estudiantes.html',
-  styles: `
-    .tabla-container {
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.05),
-        0 2px 4px -1px rgba(0, 0, 0, 0.03);
-      border: 1px solid #e2e8f0;
-      overflow: hidden; /* Para que los bordes redondeados corten la tabla */
-      width: 100%;
-    }
+  styles: `.tabla-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #e2e8f0;
+    overflow: hidden; /* Para que los bordes redondeados corten la tabla */
+    width: 100%;
+  }
 
-    .tabla-estudiantes {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.95rem;
-    }
+  .tabla-estudiantes {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    /* 🟢 ÚNICO CAMBIO: El estilo de letra de la sección de gastos */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.95rem;
+  }
 
-    .tabla-estudiantes th {
-      background-color: #f8fafc;
-      color: #475569;
-      font-weight: 400;
-      padding: 1rem 1.5rem;
-      border-bottom: 2px solid #e2e8f0;
-    }
+  .tabla-estudiantes th {
+  background-color: #f8fafc;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  border-bottom: 2px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-    .tabla-estudiantes td {
-      padding: 0.5rem 0.75rem; /* Reducido a la mitad arriba/abajo y un poco a los lados */
-      border-bottom: 1px solid #f1f5f9;
-      color: #334155;
-      font-size: 0.88rem; /* Tamaño de letra ligeramente más pequeño y muy legible */
-      vertical-align: middle; /* Alinea el texto perfectamente al centro vertical */
-    }
+  .tabla-estudiantes td {
+    padding: 0.5rem 0.75rem; /* Reducido a la mitad arriba/abajo y un poco a los lados */
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.88rem; /* Tamaño de letra ligeramente más pequeño y muy legible */
+    vertical-align: middle; /* Alinea el texto perfectamente al centro vertical */
+  }
 
-    /* Efecto Hover en las filas */
-    .tabla-estudiantes tbody tr:hover {
-      background-color: #f8fafc;
-    }
+  /* Efecto Hover en las filas */
+  .tabla-estudiantes tbody tr:hover {
+    background-color: #f8fafc;
+  }
 
-    /* Alineaciones útiles */
-    .text-center {
-      text-align: center !important;
-    }
+  /* Alineaciones útiles */
+  .text-center {
+    text-align: center !important;
+  }
 
-    /* Óvalos de Estado (Badges) */
-    .badge {
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-    .badge-activo {
-      background-color: #dcfce7;
-      color: #15803d;
-    }
-    .badge-inactivo {
-      background-color: #fee2e2;
-      color: #b91c1c;
-    }
+  /* Óvalos de Estado (Badges) */
+  .badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .badge-activo {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+  .badge-inactivo {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
 
-    /* Botones de Acción (Iconos) */
-    .btn-accion {
-      background: none;
-      border: none;
-      font-size: 1.1rem;
-      cursor: pointer;
-      padding: 0.25rem 0.5rem;
-      border-radius: 6px;
-      transition: background-color 0.2s;
-      margin: 0 0.25rem;
-    }
-    .btn-editar:hover {
-      background-color: #e0f2fe;
-    }
-    .btn-eliminar:hover {
-      background-color: #fee2e2;
-    }
+  /* Botones de Acción (Iconos) */
+  .btn-accion {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+    margin: 0 0.25rem;
+  }
+  .btn-editar:hover {
+    background-color: #e0f2fe;
+  }
+  .btn-eliminar:hover {
+    background-color: #fee2e2;
+  }
 
-    /* Estilos extra para la botonera de paginación */
-    .paginacion-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: #64748b;
-      padding: 0 0.5rem;
-    }
+  /* Estilos extra para la botonera de paginación */
+  .paginacion-container {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    align-items: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #64748b;
+    padding: 0 0.5rem;
+  }
 
-    .btn-paginacion {
-      background-color: #ffffff;
-      border: 1px solid #cbd5e1;
-      color: #334155;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+  .btn-paginacion {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
 
-    .btn-paginacion:hover:not(:disabled) {
-      background-color: #f1f5f9;
-      border-color: #94a3b8;
-    }
+  .btn-paginacion:hover:not(:disabled) {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+  }
 
-    .btn-paginacion:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+  .btn-paginacion:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-    .btn-group {
-      display: flex;
-      gap: 0.5rem;
-    }
+  .btn-group {
+    display: flex;
+    gap: 0.5rem;
+  }
   `,
 })
 export class TablaEstudiantes implements OnInit {

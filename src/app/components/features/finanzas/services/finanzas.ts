@@ -19,15 +19,26 @@ export class FinanzasService {
     return this.http.get<any>(`${this.endpoint}/contabilidad/balance`, { params });
   }
 
-  listarGastos(): Observable<any[]> {
+  listarTodosLosGastos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.endpoint}/gastos`);
   }
 
+  listarGastosRecientes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.endpoint}/gastos/recientes`);
+  }
+
+  // POST: Registrar un gasto
   registrarGasto(gasto: any): Observable<any> {
     return this.http.post<any>(`${this.endpoint}/gastos`, gasto);
   }
 
-  anularGasto(id: number): Observable<any> {
+  // PUT: Anular un gasto
+  anularGasto(id: string): Observable<any> {
     return this.http.put<any>(`${this.endpoint}/gastos/${id}/anular`, {});
+  }
+
+  // GET: Obtener categorías para el selector
+  obtenerCategorias(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.endpoint}/categorias-gasto`);
   }
 }

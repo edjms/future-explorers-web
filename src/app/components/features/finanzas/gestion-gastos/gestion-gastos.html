@@ -1,1 +1,124 @@
-<p>gestion-gastos works!</p>
+<div class="gestion-gastos-wrapper">
+  <div class="gestion-header">
+    <h3>Administración de Egresos</h3>
+    <button class="btn-volver" (click)="onVolver()">← Volver al Balance</button>
+  </div>
+
+  <div class="gestion-grid">
+
+    <section class="card-formulario">
+      <h4>Registrar Nuevo Egreso</h4>
+      <form (ngSubmit)="guardarGasto()" #gastoForm="ngForm">
+
+        <div class="form-grupo">
+          <label>Concepto *</label>
+          <input type="text" [(ngModel)]="nuevoGasto.concepto" name="concepto" required placeholder="Ej. Pago de Internet" class="form-control">
+        </div>
+
+        <div class="form-row">
+          <div class="form-grupo">
+            <label>Valor ($) *</label>
+            <input type="number" [(ngModel)]="nuevoGasto.valor" name="valor" required placeholder="0.00" class="form-control">
+          </div>
+
+          <div class="form-grupo">
+            <label>Fecha *</label>
+            <input type="date" [(ngModel)]="nuevoGasto.fechaGasto" name="fechaGasto" required class="form-control">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-grupo">
+            <label>Categoría *</label>
+            <select [(ngModel)]="nuevoGasto.categoria.id" name="categoria" required class="form-control">
+              <option value="" disabled selected>Seleccione...</option>
+              @for (cat of categorias(); track cat.id) {
+              <option [value]="cat.id">{{ cat.nombre }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-grupo">
+            <label>Medio de Pago</label>
+            <select [(ngModel)]="nuevoGasto.metodoPago" name="metodoPago" class="form-control">
+              <option value="Efectivo">Efectivo</option>
+              <option value="Transferencia">Transferencia</option>
+              <option value="Tarjeta">Tarjeta</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grupo">
+          <label>Observaciones</label>
+          <textarea [(ngModel)]="nuevoGasto.observacion" name="observacion" rows="2" placeholder="Detalles adicionales..." class="form-control textarea-custom"></textarea>
+        </div>
+
+        <button type="submit" class="btn-guardar" [disabled]="!gastoForm.valid">Guardar Transacción</button>
+      </form>
+    </section>
+
+    <section class="card-tabla">
+      <div class="tabla-header-acciones">
+        <h4>
+          {{ mostrandoTodos() ? 'Historial Completo de Egresos' : 'Historial Reciente de Egresos (Últimos 8)' }}
+        </h4>
+
+        <button
+          type="button"
+          class="btn-cargar-historial"
+          (click)="mostrandoTodos() ? consultarGastosPorDefecto() : cargarTodoElHistorial()">
+          {{ mostrandoTodos() ? '🔄 Mostrar Recientes' : '📂 Consultar Todo el Historial' }}
+        </button>
+      </div>
+
+      @if (cargando()) {
+      <div class="loader-container">Cargando transacciones...</div>
+      } @else {
+      <div class="tabla-container">
+        <table class="tabla-gastos">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Concepto</th>
+            <th>Categoría</th>
+            <th>Valor</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          @for (gasto of listaGastos(); track gasto.id) {
+          <tr>
+            <td><span class="text-id">{{ gasto.id }}</span></td>
+            <td>{{ gasto.fechaGasto | date:'dd/MM/yyyy' }}</td>
+            <td><strong>{{ gasto.concepto }}</strong></td>
+            <td><span class="tag-categoria">{{ gasto.categoria?.nombre || 'General' }}</span></td>
+            <td class="text-valor">${{ gasto.valor | number:'1.2-2' }}</td>
+            <td>
+                    <span class="badge" [class.activo]="gasto.estado === 'ACTIVO'" [class.anulado]="gasto.estado === 'Anulado'">
+                      {{ gasto.estado }}
+                    </span>
+            </td>
+            <td>
+              <button
+                class="btn-anular"
+                [disabled]="gasto.estado === 'ANULADO'"
+                (click)="anularGasto(gasto.id)">
+                Anular
+              </button>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="7" class="tabla-vacia">No hay gastos registrados en este periodo.</td>
+          </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+      }
+    </section>
+
+  </div>
+</div>
