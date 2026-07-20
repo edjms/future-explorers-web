@@ -2,6 +2,7 @@ import { Injectable, Service } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 export interface AlumnoPagoDTO {
@@ -45,6 +46,12 @@ export class EstudianteService {
       .set('size', size.toString());
 
     return this.http.get<PaginaSpring<AlumnoPagoDTO>>(`${this.endpoint}/paginacion`, { params: params });
+  }
+
+  obtenerTotalAlumnos(): Observable<number> {
+    return this.obtenerAlumnosPaginados(0, 1).pipe(
+      map((pagina) => pagina.totalElements), // 'totalElements' es la propiedad estándar que manda Spring Boot
+    );
   }
 
   actualizarEstudiante(id: number, estudiante: any): Observable<any> {

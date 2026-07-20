@@ -1,0 +1,104 @@
+<div class="dashboard-container">
+
+  <!-- Hero Banner Principal de Alto Nivel -->
+  <div class="hero-banner-pro mb-4">
+
+    <!-- Efectos de luz de fondo -->
+    <div class="glow-effect glow-1"></div>
+    <div class="glow-effect glow-2"></div>
+
+    <div class="hero-content-grid">
+
+      <!-- Columna Izquierda: Logo con efecto Badge Premium -->
+      <div class="logo-wrapper">
+        <div class="logo-card-glow">
+          <img src="fotos-alumnos/logo1.jpg" alt="Exploradores del Futuro Logo" class="brand-logo-img">
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Contenido y Métricas Rápidas -->
+      <div class="hero-text-wrapper">
+
+        <div class="status-badge mb-2">
+          <span class="status-dot"></span>
+          <span>Plataforma Activa · Modo Administrador</span>
+        </div>
+
+        <h1 class="hero-title">
+          Future<span class="highlight-text">Explorers</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Ecosistema digital centralizado para la administración de matrículas, alumnos y flujo financiero.
+        </p>
+
+        <!-- Mini resumen directo en el Hero -->
+        <div class="hero-stats-row mt-4">
+          <div class="mini-stat">
+            <span class="stat-icon">🎓</span>
+            <div>
+              <strong class="stat-number">
+                {{ cargandoTotal ? '...' : totalExploradores }}
+              </strong>
+              <small class="stat-label">Exploradores</small>
+            </div>
+          </div>
+
+          <div class="stat-divider"></div>
+
+          <div class="mini-stat">
+            <span class="stat-icon">⚡</span>
+            <div>
+              <strong class="stat-number">100%</strong>
+              <small class="stat-label">Estado Sistema</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Accesos Rápidos (Tarjetas con Elevación Pro) -->
+  <div class="modules-grid">
+
+    <!-- Módulo Exploradores -->
+    <div class="module-card-pro card-blue">
+      <div class="card-accent-line"></div>
+      <div class="module-body">
+        <div class="icon-header icon-blue">
+          <span>🎓</span>
+        </div>
+        <div class="module-info">
+          <h3 class="module-title">Gestión de Exploradores</h3>
+          <p class="module-desc">Accede al listado de alumnos, control de matriculados y fechas de corte.</p>
+        </div>
+      </div>
+      <a routerLink="/estudiantes" class="btn-pro btn-blue-pro">
+        Explorar Alumnos
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- Módulo Financiero -->
+    <div class="module-card-pro card-green">
+      <div class="card-accent-line"></div>
+      <div class="module-body">
+        <div class="icon-header icon-green">
+          <span>📊</span>
+        </div>
+        <div class="module-info">
+          <h3 class="module-title">Módulo Financiero</h3>
+          <p class="module-desc">Genera balances en tiempo real, registra egresos y audita la caja.</p>
+        </div>
+      </div>
+      <a routerLink="/finanzas" class="btn-pro btn-green-pro">
+        Ver Finanzas
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+
+</div>

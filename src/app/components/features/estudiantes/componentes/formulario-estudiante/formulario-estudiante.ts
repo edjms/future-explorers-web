@@ -319,6 +319,7 @@ export class FormularioEstudiante implements OnInit {
           console.log('✅ ¡Guardado con éxito en el Backend!', respuesta);
           alert('¡Estudiante guardado correctamente!');
           this.cerrar.emit();
+          this.cdr.detectChanges();
         },
         error: (error) => {
           console.error('🔴 Error al conectar con Spring Boot:', error);

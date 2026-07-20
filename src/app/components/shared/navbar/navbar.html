@@ -1,44 +1,34 @@
 <nav class="navbar-container">
-  <!-- 1. El Logo / Nombre de la App -->
+  <!-- 1. Logo -->
   <div class="navbar-logo">
-    <span class="logo-icon">🚀</span>
+    <div class="navbar-logo-badge">
+      <img src="fotos-alumnos/logo2.jpg" alt="Logo Future Explorers" class="navbar-logo-img">
+    </div>
     <span class="logo-text">Future<strong>Explorers</strong></span>
   </div>
 
-  <!-- 2. Menú de Navegación Central -->
+  <!-- 2. Menú de Navegación -->
   <ul class="navbar-menu">
     <li>
-      <a (click)="cambiarModulo('inicio')"
-         class="menu-item"
-         [class.active]="moduloActivo() === 'inicio'">Inicio</a>
+      <a routerLink="/inicio" routerLinkActive="active" class="menu-item">Inicio</a>
     </li>
 
     <li>
-      <a (click)="cambiarModulo('estudiantes')"
-         class="menu-item"
-         [class.active]="moduloActivo() === 'estudiantes'">Estudiantes</a>
+      <a routerLink="/estudiantes" routerLinkActive="active" class="menu-item">Estudiantes</a>
     </li>
 
     <li>
-      <a (click)="cambiarModulo('finanzas')"
-         class="menu-item"
-         [class.active]="moduloActivo() === 'finanzas'">Finanzas</a>
+      <a routerLink="/profesores" routerLinkActive="active" class="menu-item">Profesores</a>
+    </li>
+
+    <li>
+      <a routerLink="/finanzas" routerLinkActive="active" class="menu-item">Finanzas</a>
     </li>
   </ul>
 
-  <!-- 3. Zona de Usuario (Derecha) -->
+  <!-- 3. Zona de Usuario -->
   <div class="navbar-user">
     <div class="user-avatar">E</div>
     <span class="user-name">Esteban (Admin)</span>
   </div>
 </nav>
-
-<main class="content-container">
-  @if (moduloActivo() === 'estudiantes') {
-  <app-estudiantes></app-estudiantes>
-  }
-
-  @if (moduloActivo() === 'finanzas') {
-  <app-finanzas></app-finanzas>
-  }
-</main>

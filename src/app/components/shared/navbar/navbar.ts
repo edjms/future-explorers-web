@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { Estudiantes } from '../../features/estudiantes/estudiantes';
 import { Finanzas } from '../../features/finanzas/finanzas';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, Estudiantes, Finanzas],
+  imports: [CommonModule,RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

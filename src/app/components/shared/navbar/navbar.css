@@ -11,17 +11,46 @@
 }
 
 /* 1. Estilos del Logo */
+/* Contenedor del Logo en el Navbar */
 .navbar-logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1.25rem;
-  cursor: pointer;
-}
-.logo-text strong {
-  color: #38bdf8; /* Azul Claro / Cian para el toque tecnológico */
+  gap: 0.75rem;
 }
 
+/* Badge circular pequeñito con sombra sutil */
+.navbar-logo-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  padding: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del Logo recortada circularmente */
+.navbar-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Texto del Logo */
+.logo-text {
+  font-size: 1.25rem;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.logo-text strong {
+  color: #38bdf8; /* Azul cyan brillante acorde al tema */
+}
 /* 2. Estilos del Menú */
 .navbar-menu {
   display: flex;

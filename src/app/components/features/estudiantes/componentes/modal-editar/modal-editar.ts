@@ -148,8 +148,10 @@ export class ModalEditar implements OnInit {
     this.estudianteService.actualizarEstudiante(idEstudiante, estudianteAEnviar).subscribe({
       next: (response) => {
         console.log('¡Actualizado con éxito!', response);
+        this.cerrar.emit();
         this.edicionExitosa.emit(); // Notifica a la tabla que recargue los datos
-        this.cerrar.emit();         // Cierra el modal
+
+        // Cierra el modal
       },
       error: (err: any) => {
         console.error('Error al actualizar', err);
@@ -160,5 +162,6 @@ export class ModalEditar implements OnInit {
 
   cancelar(): void {
     this.cerrar.emit();
+    this.cdr.detectChanges();
   }
 }
