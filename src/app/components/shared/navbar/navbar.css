@@ -74,25 +74,126 @@
   padding-bottom: 4px;
 }
 
-/* 3. Estilos de la Zona de Usuario */
+/* --- Estilos base del Navbar --- */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0d1b2a; /* Mantiene tu tono azul oscuro */
+  padding: 0 2rem;
+  height: 65px;
+  position: relative;
+}
+
+/* --- Contenedor relativo de la zona de usuario --- */
+.navbar-user-wrapper {
+  position: relative; /* Clave para que la tarjeta flotante se posicione respecto a esto */
+}
+
 .navbar-user {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: #ffffff;
+  user-select: none;
+  transition: background-color 0.2s;
 }
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  background-color: #38bdf8;
-  color: #0f172a;
+
+.navbar-user:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-arrow {
+  font-size: 9px;
+  transition: transform 0.2s ease;
+  color: #a0aec0;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* --- TARJETA FLOTANTE (Posicionamiento Absoluto) --- */
+.user-dropdown-card {
+  position: absolute;
+  top: calc(100% + 12px); /* Se posiciona justo debajo del avatar */
+  right: 0;
+  width: 250px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  z-index: 9999; /* Vuela por encima de las tablas y contenidos */
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+.dropdown-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.user-avatar-lg {
+  width: 42px;
+  height: 42px;
+  background-color: #0088cc;
+  color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
 }
-.user-name {
-  font-size: 0.9rem;
-  color: #cbd5e1;
+
+.user-email {
+  font-size: 0.82rem;
+  color: #4a5568;
+  font-weight: 500;
+  word-break: break-all;
+  text-align: center;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 12px 0;
+}
+
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #0f4c81; /* Tono azul acorde al sistema */
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #0a355c;
+}
+
+/* Animación de entrada suave */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

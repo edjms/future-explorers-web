@@ -12,6 +12,7 @@ import { EstudianteService } from '../../servicios/estudiante';
     .buscador-container {
       margin-bottom: 1rem;
       width: 100%;
+      font-family: system-ui, -apple-system, sans-serif;font-family: system-ui, -apple-system, sans-serif;
     }
 
     .input-wrapper {

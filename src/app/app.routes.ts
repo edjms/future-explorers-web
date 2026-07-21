@@ -1,28 +1,38 @@
 import { Routes } from '@angular/router';
 import { Profesores } from './components/features/profesores/profesores/profesores';
-
+import { Login } from './components/features/auth/login/login';
+import { authGuard } from './components/features/auth/guards/auth-guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'inicio',
-    pathMatch: 'full'
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./components/features/auth/login/login').then((m) => m.Login),
   },
   {
     path: 'inicio',
-    loadComponent: () => import('./components/shared/inicio/inicio').then(m => m.Inicio)
+    canActivate: [authGuard],
+    loadComponent: () => import('./components/shared/inicio/inicio').then((m) => m.Inicio),
   },
   {
     path: 'finanzas',
-    loadComponent: () => import('./components/features/finanzas/finanzas').then(m => m.Finanzas)
+    canActivate: [authGuard],
+    loadComponent: () => import('./components/features/finanzas/finanzas').then((m) => m.Finanzas),
   },
   {
     path: 'estudiantes',
-    loadComponent: () => import('./components/features/estudiantes/estudiantes').then(m => m.Estudiantes)
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./components/features/estudiantes/estudiantes').then((m) => m.Estudiantes),
   },
-  { path: 'profesores', component: Profesores },
+  { path: 'profesores',
+    component: Profesores,
+    canActivate: [authGuard] },
   {
     path: '**',
-    redirectTo: 'inicio'
-  }
-
+    redirectTo: 'login',
+  },
 ];

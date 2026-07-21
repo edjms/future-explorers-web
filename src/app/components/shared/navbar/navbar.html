@@ -12,23 +12,43 @@
     <li>
       <a routerLink="/inicio" routerLinkActive="active" class="menu-item">Inicio</a>
     </li>
-
     <li>
       <a routerLink="/estudiantes" routerLinkActive="active" class="menu-item">Estudiantes</a>
     </li>
-
     <li>
       <a routerLink="/profesores" routerLinkActive="active" class="menu-item">Profesores</a>
     </li>
-
     <li>
       <a routerLink="/finanzas" routerLinkActive="active" class="menu-item">Finanzas</a>
     </li>
   </ul>
 
-  <!-- 3. Zona de Usuario -->
-  <div class="navbar-user">
-    <div class="user-avatar">E</div>
-    <span class="user-name">Esteban (Admin)</span>
+  <!-- 3. Zona de Usuario con Menú Desplegable Flotante -->
+  <div class="navbar-user-container">
+    <div class="navbar-user" (click)="toggleDropdown()">
+      <div class="user-avatar">E</div>
+      <span class="user-name">Esteban (Admin)</span>
+      <span class="dropdown-arrow" [class.open]="isDropdownOpen()">▼</span>
+    </div>
+
+    @if (isDropdownOpen()) {
+    <div class="user-dropdown-card">
+      <div class="dropdown-user-info">
+        <div class="user-avatar-lg">E</div>
+        <span class="user-email">{{ userEmail }}</span>
+      </div>
+
+      <div class="dropdown-divider"></div>
+
+      <button class="logout-btn" (click)="onLogout()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Cerrar Sesión
+      </button>
+    </div>
+    }
   </div>
 </nav>

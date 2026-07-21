@@ -29,6 +29,7 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
       justify-content: center;
       align-items: center;
       z-index: 9999;
+      font-family: system-ui, -apple-system, sans-serif;
     }
 
     /* Contenedor del Modal: Más amplio (850px) */

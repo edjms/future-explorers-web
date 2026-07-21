@@ -1,0 +1,241 @@
+/* Contenedor principal a pantalla completa */
+.login-page {
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Tarjeta dividida en 2 columnas */
+.login-card {
+  display: flex;
+  width: 100%;
+  max-width: 950px;
+  min-height: 560px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+/* --- LADO IZQUIERDO (BANNER / IMAGEN) --- */
+.login-banner {
+  flex: 1;
+  position: relative;
+  background-color: #0d1b2a;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px;
+  overflow: hidden;
+}
+
+.banner-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.45;
+  transition: transform 0.5s ease;
+}
+
+.login-card:hover .banner-image {
+  transform: scale(1.03);
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(13, 27, 42, 0.95), transparent);
+  z-index: 1;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+}
+
+.banner-content h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.banner-content p {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+/* --- LADO DERECHO (FORMULARIO) --- */
+.login-form-container {
+  flex: 1;
+  padding: 50px 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.brand-header {
+  margin-bottom: 25px;
+}
+
+.brand-name {
+  font-size: 1.3rem;
+  color: #0d1b2a;
+  letter-spacing: -0.5px;
+}
+
+.brand-name strong {
+  color: #0088cc;
+}
+
+.login-title {
+  font-size: 1.75rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 10px 0 6px 0;
+}
+
+.login-subtitle {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+/* Mensaje de Error */
+.alert-danger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.alert-danger svg {
+  flex-shrink: 0;
+}
+
+/* Estilos del Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper svg {
+  position: absolute;
+  left: 14px;
+  color: #94a3b8;
+  transition: color 0.2s;
+}
+
+.input-wrapper .form-control {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.input-wrapper .form-control:focus {
+  border-color: #0088cc;
+  box-shadow: 0 0 0 4px rgba(0, 136, 204, 0.12);
+}
+
+.input-wrapper:focus-within svg {
+  color: #0088cc;
+}
+
+/* Botón Iniciar Sesión */
+.btn-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #0088cc;
+  color: #000000;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s, transform 0.1s;
+  margin-top: 10px;
+}
+
+.btn-login:hover:not(:disabled) {
+  background-color: #0077b6;
+}
+
+.btn-login:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.btn-login:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+  .login-card {
+    flex-direction: column;
+    max-width: 450px;
+  }
+
+  .login-banner {
+    min-height: 180px;
+    padding: 24px;
+  }
+
+  .login-form-container {
+    padding: 30px 24px;
+  }
+}
