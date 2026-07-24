@@ -4,7 +4,10 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  tipo: string;    // "Bearer"
-  mensaje: string; // "¡Login exitoso!"
+
+  tipo: string;
+  imagen: string;// "Bearer"
+  mensaje: string;
+  nombre: string;// "¡Login exitoso!"
   token: string;   // "eyJhbGci..."
 }

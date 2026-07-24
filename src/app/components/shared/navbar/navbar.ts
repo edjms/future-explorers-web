@@ -18,10 +18,27 @@ export class Navbar {
   protected readonly moduloActivo = signal<string>('estudiantes');
   protected readonly isDropdownOpen = signal<boolean>(false);
 
-  // Información del usuario
-  public readonly userEmail: string = 'futureexplorers1@gmail.com';
+  get userName(): string {
+    const user = this.authService.currentUser();
+    if (!user) return 'Usuario';
+    return user.nombre || 'Usuario';
+  }
 
+  get userFotoUrl(): string | null {
+    const foto = this.authService.currentUser()?.imagen;
+    if (!foto) return null;
+    // Si la ruta ya incluye http o fotos-alumnos, la dejamos tal cual
+    if (foto.startsWith('http') || foto.startsWith('fotos-alumnos/')) {
+      return foto;
+    }
+    return `fotos-alumnos/${foto}`;
+  }
+
+  get userInitial(): string {
+    return this.userName.charAt(0).toUpperCase();
   // Cambiar pestaña activa
+    }
+
   cambiarModulo(modulo: string): void {
     this.moduloActivo.set(modulo);
   }
@@ -41,7 +58,6 @@ export class Navbar {
   @HostListener('document:click', ['$event'])
   closeDropdownOutside(event: Event): void {
     const target = event.target as HTMLElement;
-
     // Verifica ambas clases por si usaste .navbar-user-wrapper o .navbar-user-container en tu HTML
     if (!target.closest('.navbar-user-wrapper') && !target.closest('.navbar-user-container')) {
       this.isDropdownOpen.set(false);

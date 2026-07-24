@@ -86,7 +86,8 @@
 }
 
 /* --- Contenedor relativo de la zona de usuario --- */
-.navbar-user-wrapper {
+.navbar-user-wrapper,
+.navbar-user-container {
   position: relative; /* Clave para que la tarjeta flotante se posicione respecto a esto */
 }
 
@@ -104,6 +105,22 @@
 
 .navbar-user:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 🎯 CORRECCIÓN DEL AVATAR PEQUEÑO EN LA BARRA SUPERIOR */
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #0088cc;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  overflow: hidden; /* Corta la imagen para que no tape el texto */
+  flex-shrink: 0;   /* Evita que el contenedor se aplaste */
 }
 
 .dropdown-arrow {
@@ -138,9 +155,10 @@
   padding-bottom: 8px;
 }
 
+/* 🎯 CORRECCIÓN DEL AVATAR GRANDE DENTRO DEL MENU FLOTANTE */
 .user-avatar-lg {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   background-color: #0088cc;
   color: white;
   border-radius: 50%;
@@ -149,6 +167,8 @@
   justify-content: center;
   font-weight: bold;
   font-size: 1.1rem;
+  overflow: hidden; /* Corta la imagen para que sea circular perfecta */
+  flex-shrink: 0;
 }
 
 .user-email {
@@ -196,4 +216,20 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 🎯 ESTILOS DE LA IMAGEN DENTRO DE LOS AVATARES */
+.user-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.user-display-name {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+  margin-top: 4px;
 }

@@ -3,11 +3,11 @@
   <!-- Header -->
   <div class="header-section mb-4">
     <div>
-      <h2 class="title">Administración de Profesores</h2>
-      <p class="subtitle">Administra los docentes del sistema y sus comisiones asignadas.</p>
+      <h2 class="title">Administración de Tutores</h2>
+      <p class="subtitle">Administra los Tutores del sistema y sus comisiones asignadas.</p>
     </div>
     <button class="btn-registrar" (click)="abrirModalCrear()">
-      + Registrar Profesor
+      + Registrar Tutor
     </button>
   </div>
 
@@ -21,7 +21,7 @@
       <table class="custom-table">
         <thead>
         <tr>
-          <th>Profesor</th>
+          <th>Tutor</th>
           <th>Identificación</th>
           <th>Email</th>
           <th>% Comisión</th>
@@ -53,7 +53,7 @@
       <p>Cargando lista de profesores...</p>
     </div>
     <div *ngIf="!cargando && profesores.length === 0" class="text-center py-5">
-      <p>No hay profesores registrados en el sistema.</p>
+      <p>No hay Tutores registrados en el sistema.</p>
     </div>
   </div>
 
@@ -63,7 +63,7 @@
 
       <div class="modal-header">
         <h3 style="margin: 0; font-size: 1.3rem; color: #1e293b; font-weight: 600;">
-          {{ editando ? 'Editar Datos del Profesor' : 'Registrar Nuevo Profesor' }}
+          {{ editando ? 'Editar Datos del Tutor' : 'Registrar Nuevo Tutor' }}
         </h3>
         <button type="button" (click)="cerrarModal()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #64748b;">✕</button>
       </div>
@@ -136,7 +136,7 @@
         <div class="modal-footer">
           <button type="button" (click)="cerrarModal()" style="padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer; font-weight: 500;">Cancelar</button>
           <button type="submit" class="btn-registrar" [disabled]="!formProf.valid">
-            {{ editando ? 'Guardar Cambios' : 'Registrar Profesor' }}
+            {{ editando ? 'Guardar Cambios' : 'Registrar Tutor' }}
           </button>
         </div>
       </form>

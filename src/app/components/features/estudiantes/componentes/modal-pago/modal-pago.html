@@ -6,8 +6,20 @@
     </div>
 
     <div class="modal-cuerpo">
-      <p><strong>Estudiante:</strong> <span style="text-transform: capitalize;">esteban mazo</span></p>
-      <p><strong>Documento:</strong> <span style="color: #007bff; font-weight: 600;">90900300</span></p>
+      <!-- 🎯 Datos dinámicos del estudiante tomados desde @Input() alumno -->
+      <p>
+        <strong>Explorador: </strong>
+        <span style="color: #007bff; font-weight: 600;">
+          {{ alumno?.nombreCompleto }}
+        </span>
+      </p>
+      <p>
+        <strong>Documento:</strong>
+        <span style="color: #007bff; font-weight: 600;">
+          {{ alumno?.documento }}
+        </span>
+      </p>
+
       <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
 
       <form (ngSubmit)="guardar()">

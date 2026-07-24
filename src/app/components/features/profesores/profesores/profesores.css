@@ -1,5 +1,8 @@
 .dashboard-container {
-  padding: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 .header-section {

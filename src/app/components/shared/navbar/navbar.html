@@ -13,10 +13,10 @@
       <a routerLink="/inicio" routerLinkActive="active" class="menu-item">Inicio</a>
     </li>
     <li>
-      <a routerLink="/estudiantes" routerLinkActive="active" class="menu-item">Estudiantes</a>
+      <a routerLink="/estudiantes" routerLinkActive="active" class="menu-item">Exploradores</a>
     </li>
     <li>
-      <a routerLink="/profesores" routerLinkActive="active" class="menu-item">Profesores</a>
+      <a routerLink="/profesores" routerLinkActive="active" class="menu-item">Tutores</a>
     </li>
     <li>
       <a routerLink="/finanzas" routerLinkActive="active" class="menu-item">Finanzas</a>
@@ -26,16 +26,30 @@
   <!-- 3. Zona de Usuario con Menú Desplegable Flotante -->
   <div class="navbar-user-container">
     <div class="navbar-user" (click)="toggleDropdown()">
-      <div class="user-avatar">E</div>
-      <span class="user-name">Esteban (Admin)</span>
+      <!-- Muestra foto de BD si existe, si no muestra la Inicial -->
+      <div class="user-avatar">
+        @if (userFotoUrl) {
+        <img [src]="userFotoUrl" [alt]="userName" class="user-avatar-img" />
+        } @else {
+        <span>{{ userInitial }}</span>
+        }
+      </div>
+
+      <span class="user-name">{{ userName }}</span>
       <span class="dropdown-arrow" [class.open]="isDropdownOpen()">▼</span>
     </div>
 
     @if (isDropdownOpen()) {
     <div class="user-dropdown-card">
       <div class="dropdown-user-info">
-        <div class="user-avatar-lg">E</div>
-        <span class="user-email">{{ userEmail }}</span>
+        <div class="user-avatar-lg">
+          @if (userFotoUrl) {
+          <img [src]="userFotoUrl" [alt]="userName" class="user-avatar-img" />
+          } @else {
+          <span>{{ userInitial }}</span>
+          }
+        </div>
+        <span class="user-display-name">{{ userName }}</span>
       </div>
 
       <div class="dropdown-divider"></div>
