@@ -1,18 +1,18 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { EstudianteService } from '../../servicios/estudiante';
 import { ProfesorService } from '../../../profesores/servicios/profesor';
-
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-formulario-estudiante',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    ReactiveFormsModule,
-    CommonModule, // 👈 Debe estar aquí adentro
+    CommonModule,
     NgFor,
+    NgIf
   ],
   templateUrl: './formulario-estudiante.html',
   styles: `
@@ -23,7 +23,7 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(15, 23, 42, 0.6); /* Backdrop elegante */
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
       display: flex;
       justify-content: center;
@@ -69,9 +69,32 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
       color: #64748b;
     }
 
-    /* Formulario Layout: 2 Columnas (Izquierda Foto, Derecha Campos) */
+    /* Banner Elegante de Error */
+    .error-banner {
+      margin: 1rem 2rem 0 2rem;
+      padding: 0.85rem 1.25rem;
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      color: #991b1b;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .error-banner button {
+      background: transparent;
+      border: none;
+      color: #991b1b;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Formulario Layout: 2 Columnas */
     .modal-body-form {
-      padding: 2rem;
+      padding: 1.5rem 2rem 2rem 2rem;
       display: grid;
       grid-template-columns: 220px 1fr;
       gap: 2rem;
@@ -150,10 +173,6 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
       gap: 0.5rem;
     }
 
-    .form-group-full {
-      grid-column: span 2;
-    }
-
     .form-group label {
       font-size: 0.9rem;
       font-weight: 500;
@@ -178,7 +197,7 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
 
     /* Footer de Acciones */
     .modal-footer {
-      padding: 1rem 1rem;
+      padding: 1rem 2rem;
       background: #f8fafc;
       border-top: 1px solid #e2e8f0;
       display: flex;
@@ -196,20 +215,6 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
       cursor: pointer;
     }
 
-    .btn-guardar {
-      background: #2563eb;
-      border: none;
-      color: #ffffff;
-      padding: 0.65rem 1.25rem;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-
-    .btn-guardar:hover {
-      background: #1d4ed8;
-    }
-
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -220,12 +225,6 @@ import { ProfesorService } from '../../../profesores/servicios/profesor';
         transform: scale(1);
       }
     }
-
-    .avatar-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* 🎯 Esto hace que la foto se recorte proporcionalmente al círculo */
-    }
   `,
 })
 export class FormularioEstudiante implements OnInit {
@@ -235,6 +234,10 @@ export class FormularioEstudiante implements OnInit {
 
   imagenPreview: string | null = null;
   listaProfesores: any[] = [];
+
+  // Variables de Control de Estado y Errores
+  guardando = false;
+  mensajeError: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -259,99 +262,81 @@ export class FormularioEstudiante implements OnInit {
   capturarNombreArchivo(event: any) {
     const archivo = event.target.files[0];
     if (archivo) {
-      // 1. Guardamos el nombre del archivo en el formulario para enviarlo al backend
       this.formularioEstudiante.patchValue({
         imagenUrl: archivo.name,
       });
 
-      // 2. 🎯 LA MAGIA: Leemos el archivo real para generar la vista previa visual
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagenPreview = reader.result as string; // Guardamos la URL en base64
-        this.cdr.detectChanges(); // Forzamos a Angular a redibujar la imagen de inmediato
+        this.imagenPreview = reader.result as string;
+        this.cdr.detectChanges();
       };
       reader.readAsDataURL(archivo);
     }
   }
+
   cargarProfesores(): void {
     this.profesorService.obtenerProfesores().subscribe({
       next: (data: any) => {
-        console.log('Respuesta cruda de profesores:', data); // 👈 ¡Añade esto!
         this.listaProfesores = data.content || data;
-        console.log('Lista procesada asignada al formulario:', this.listaProfesores); // 👈 Y esto!
+        this.cdr.detectChanges();
       },
       error: (err: any) => {
-        console.error('Error al cargar profesores en el formulario de registro', err);
+        console.error('Error al cargar profesores:', err);
       },
     });
   }
 
-
   guardarEstudiante() {
-    if (this.formularioEstudiante.valid) {
-      const formValues = this.formularioEstudiante.value;
-      const hoy = new Date().toISOString().split('T')[0];
+    this.mensajeError = null;
 
-      // 🏗️ Armamos el objeto con los datos reales del formulario
-      const estudianteRequestBody = {
-        id: formValues.id,
-        documento: formValues.documento,
-        nombre: formValues.nombre,
-        apellido: formValues.apellido,
-        email: formValues.correo,
-        fechaIngreso: hoy,
-        imagenUrl: formValues.imagenUrl,
-        activo: formValues.estado === 'true' || formValues.estado === true,
+    if (this.formularioEstudiante.invalid) {
+      this.mensajeError = 'Por favor completa todos los campos requeridos correctamente.';
+      this.formularioEstudiante.markAllAsTouched();
+      this.cdr.detectChanges();
+      return;
+    }
 
-        // ⚠️ TEMPORAL: Se dejan estos IDs fijos (1) porque aún no hemos
-        // creado los servicios en Angular para listar profesores y tarifas reales.
-        tarifa: {
-          id: 1,
-        },
-        profesor: {
-          id: Number(formValues.profesorId),
-        },
-      };
+    this.guardando = true;
+    const formValues = this.formularioEstudiante.value;
+    const hoy = new Date().toISOString().split('T')[0];
 
-      console.log('🚀 Despachando estructura gigante al servicio...', estudianteRequestBody);
+    const estudianteRequestBody = {
+      id: formValues.id,
+      documento: formValues.documento,
+      nombre: formValues.nombre,
+      apellido: formValues.apellido,
+      email: formValues.correo,
+      fechaIngreso: hoy,
+      imagenUrl: formValues.imagenUrl,
+      activo: formValues.estado === 'true' || formValues.estado === true,
+      tarifa: { id: 1 },
+      profesor: { id: Number(formValues.profesorId) },
+    };
 
-      this.estudianteService.registrarEstudiante(estudianteRequestBody).subscribe({
+    this.estudianteService.registrarEstudiante(estudianteRequestBody)
+      .pipe(
+        finalize(() => {
+          // 🎯 Ocurra lo que ocurra (éxito o error), liberamos el estado de guardando
+          this.guardando = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
         next: (respuesta) => {
-          console.log('✅ ¡Guardado con éxito en el Backend!', respuesta);
-          alert('¡Estudiante guardado correctamente!');
+          console.log('✅ ¡Guardado con éxito!', respuesta);
           this.cerrar.emit();
+        },
+        error: (error) => {
+          console.error('🔴 Error al registrar estudiante:', error);
+
+          // Extraemos el mensaje retornado por Spring Boot si existe
+          this.mensajeError = error.error?.mensaje
+            || 'No se pudo guardar el estudiante. Verifica los datos o la conexión con el servidor.';
+
+          // Forzamos la detección de cambios para evitar que la pantalla se congele
           this.cdr.detectChanges();
         },
-        error: (error) => {
-          console.error('🔴 Error al conectar con Spring Boot:', error);
-          alert('No se pudo guardar el estudiante. Revisa la consola.');
-        },
       });
-    } else {
-      alert('Por favor, rellena todos los campos correctamente.');
-    }
   }
 }
-  /*guardarEstudiante() {
-    if (this.formularioEstudiante.valid) {
-      const datosEstudiante = this.formularioEstudiante.value;
-      console.log('Entregando datos al servicio...', datosEstudiante);
-      this.estudianteService.registrarEstudiante(datosEstudiante).subscribe({
-        next: (respuesta) => {
-          console.log('¡✅ Guardado con éxito en el Backend!', respuesta);
-          alert('¡Estudiante guardado correctamente!');
-          this.cerrar.emit();
-        },
-        error: (error) => {
-          // ❌ Si el Backend está apagado o falla:
-          console.error('🔴 Error al conectar con Spring Boot:', error);
-          alert('No se pudo guardar el estudiante. (¿Está encendido el Backend?)');
-          this.cerrar.emit(); // Cerramos el modal de todos modos por ahora
-        },
-      });
-      this.cerrar.emit();
-    } else {
-      alert('Por favor, rellena todos los campos correctamente.');
-    }
-  }**/
-

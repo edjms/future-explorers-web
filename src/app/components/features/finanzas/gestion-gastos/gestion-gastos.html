@@ -8,6 +8,22 @@
 
     <section class="card-formulario">
       <h4>Registrar Nuevo Egreso</h4>
+
+      <!-- 🎯 Banners de Notificación Integrados (Reemplazo de alerts nativos) -->
+      @if (mensajeError()) {
+      <div class="alert-banner alert-error">
+        <span>⚠️ {{ mensajeError() }}</span>
+        <button type="button" (click)="limpiarMensajes()">✕</button>
+      </div>
+      }
+
+      @if (mensajeExito()) {
+      <div class="alert-banner alert-success">
+        <span>✅ {{ mensajeExito() }}</span>
+        <button type="button" (click)="limpiarMensajes()">✕</button>
+      </div>
+      }
+
       <form (ngSubmit)="guardarGasto()" #gastoForm="ngForm">
 
         <div class="form-grupo">
@@ -53,7 +69,10 @@
           <textarea [(ngModel)]="nuevoGasto.observacion" name="observacion" rows="2" placeholder="Detalles adicionales..." class="form-control textarea-custom"></textarea>
         </div>
 
-        <button type="submit" class="btn-guardar" [disabled]="!gastoForm.valid">Guardar Transacción</button>
+        <!-- 🎯 Botón adaptado a estado guardando -->
+        <button type="submit" class="btn-guardar" [disabled]="!gastoForm.valid || guardando()">
+          {{ guardando() ? 'Guardando Transacción...' : 'Guardar Transacción' }}
+        </button>
       </form>
     </section>
 
@@ -96,14 +115,14 @@
             <td><span class="tag-categoria">{{ gasto.categoria?.nombre || 'General' }}</span></td>
             <td class="text-valor">${{ gasto.valor | number:'1.2-2' }}</td>
             <td>
-                    <span class="badge" [class.activo]="gasto.estado === 'ACTIVO'" [class.anulado]="gasto.estado === 'Anulado'">
+                    <span class="badge" [class.activo]="gasto.estado === 'ACTIVO'" [class.anulado]="gasto.estado === 'Anulado' || gasto.estado === 'ANULADO'">
                       {{ gasto.estado }}
                     </span>
             </td>
             <td>
               <button
                 class="btn-anular"
-                [disabled]="gasto.estado === 'ANULADO'"
+                [disabled]="gasto.estado === 'ANULADO' || gasto.estado === 'Anulado'"
                 (click)="anularGasto(gasto.id)">
                 Anular
               </button>

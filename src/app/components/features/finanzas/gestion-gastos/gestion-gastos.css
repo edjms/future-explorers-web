@@ -40,7 +40,7 @@
 /* Grilla para tener el formulario al lado de la tabla */
 .gestion-grid {
   display: grid;
-  grid-template-columns: 380px 1fr; /* Columna de formulario fija, tabla flexible */
+  grid-template-columns: 380px 1fr;
   gap: 1.25rem;
   align-items: start;
 }
@@ -62,7 +62,7 @@
   padding-bottom: 0.5rem;
 }
 
-/* Formulario Súper Limpio y Compacto */
+/* Formulario Compacto */
 .form-grupo {
   display: flex;
   flex-direction: column;
@@ -104,7 +104,7 @@
 .btn-guardar {
   width: 100%;
   background-color: #2563eb;
-  color: white;
+  color: #000000; /* Ajustado a blanco para buena legibilidad */
   border: none;
   padding: 0.6rem;
   border-radius: 6px;
@@ -125,11 +125,47 @@
   cursor: not-allowed;
 }
 
-/* TABLA DE HISTORIAL (Ultra compacta y limpia) */
+/* 🎯 Avisos y Alertas Integrados (Reemplazo de alert()) */
+.alert-banner {
+  margin-bottom: 1rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.alert-banner button {
+  background: transparent;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: inherit;
+  line-height: 1;
+}
+
+/* TABLA DE HISTORIAL */
 .tabla-container {
-  overflow-x: auto;
-  max-height: 400px; /* Para que encaje perfectamente sin scroll de página */
+  max-height: 350px;
   overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
 }
 
 .tabla-gastos {
@@ -147,11 +183,11 @@
   border-bottom: 2px solid #e2e8f0;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 8;
 }
 
 .tabla-gastos td {
-  padding: 0.45rem 0.75rem; /* El padding compacto perfecto */
+  padding: 0.45rem 0.75rem;
   border-bottom: 1px solid #f1f5f9;
   color: #334155;
   font-size: 0.85rem;
@@ -226,25 +262,6 @@
   font-size: 0.9rem;
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.tabla-container {
-  max-height: 350px; /* Altura máxima ideal para ver cómodamente unos 7-8 registros */
-  overflow-y: auto;   /* Activa el scroll vertical interno */
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-}
-
-/* Mantener el header de la tabla siempre visible arriba mientras haces scroll */
-.tabla-container table thead {
-  position: sticky;
-  top: 0;
-  background-color: #f8fafc; /* Color de fondo para que no se transparenten los textos al scrollear */
-  z-index: 8;
-}
-
 .tabla-header-acciones {
   display: flex;
   justify-content: space-between;
@@ -253,10 +270,9 @@
 }
 
 .tabla-header-acciones h4 {
-  margin: 0; /* Quita el margen por defecto para que no se desfase */
+  margin: 0;
 }
 
-/* Estilo estético para el botón de cargar historial */
 .btn-cargar-historial {
   background-color: #f1f5f9;
   color: #334155;
@@ -273,4 +289,14 @@
   background-color: #e2e8f0;
   color: #0f172a;
   border-color: #94a3b8;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PagoService } from '../../servicios/pago';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-modal-pago',
@@ -13,7 +14,10 @@ import { PagoService } from '../../servicios/pago';
 export class ModalPago {
   @Input() mostrar: boolean = false;
 
-  // Manejo reactivo de alumno para calcular la fecha de vencimiento por defecto
+  private cdr = inject(ChangeDetectorRef);
+  private pagoService = inject(PagoService);
+
+  // Manejo reactivo de alumno
   private _alumno: any = null;
 
   @Input()
@@ -31,14 +35,18 @@ export class ModalPago {
   @Output() alCerrar = new EventEmitter<void>();
   @Output() alGuardarExitoso = new EventEmitter<void>();
 
+  // Variables de control de estado y errores
+  guardando: boolean = false;
+  mensajeError: string | null = null;
+
   nuevoPago = {
     fechaPago: '',
-    monto: null,
+    monto: null as number | null,
     fechaVencimiento: '',
     evidencia: '',
   };
 
-  constructor(private pagoService: PagoService) {
+  constructor() {
     this.prepararFechasPredeterminadas();
   }
 
@@ -66,15 +74,21 @@ export class ModalPago {
   }
 
   guardar(): void {
+    this.mensajeError = null;
+
     if (!this.nuevoPago.fechaPago || !this.nuevoPago.monto || !this.nuevoPago.fechaVencimiento) {
-      alert('Por favor completa la fecha de pago, el monto y la fecha de vencimiento.');
+      this.mensajeError = 'Por favor completa la fecha de pago, el monto y la fecha de vencimiento.';
+      this.cdr.detectChanges();
       return;
     }
 
     if (!this.alumno?.documento) {
-      alert('Error: No se ha seleccionado un alumno válido.');
+      this.mensajeError = 'Error: No se ha seleccionado un alumno válido.';
+      this.cdr.detectChanges();
       return;
     }
+
+    this.guardando = true;
 
     const pagoPayload = {
       fechaPago: this.nuevoPago.fechaPago,
@@ -86,20 +100,31 @@ export class ModalPago {
       },
     };
 
-    this.pagoService.registrarPago(pagoPayload).subscribe({
-      next: (response: any) => {
-        console.log('¡Pago registrado con éxito en el backend!', response);
-        this.alGuardarExitoso.emit();
-        this.cerrar();
-      },
-      error: (err: any) => {
-        console.error('Error al registrar el pago en Spring Boot:', err);
-        alert('Hubo un error al guardar el pago. Revisa la consola.');
-      },
-    });
+    this.pagoService.registrarPago(pagoPayload)
+      .pipe(
+        finalize(() => {
+          // 🎯 Se ejecuta SIEMPRE (éxito o error) liberando el botón y forzando refresco en Zoneless
+          this.guardando = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          console.log('¡Pago registrado con éxito en el backend!', response);
+          this.alGuardarExitoso.emit();
+          this.cerrar();
+        },
+        error: (err: any) => {
+          console.error('Error al registrar el pago en Spring Boot:', err);
+          this.mensajeError = err.error?.mensaje || 'Hubo un error al guardar el pago. Verifica los datos enviados.';
+          this.cdr.detectChanges();
+        },
+      });
   }
 
   private resetFormulario(): void {
+    this.mensajeError = null;
+    this.guardando = false;
     this.nuevoPago.monto = null;
     this.nuevoPago.evidencia = '';
     this.prepararFechasPredeterminadas();

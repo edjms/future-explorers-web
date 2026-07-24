@@ -2,6 +2,7 @@
 /* Fondo oscuro traslúcido elegante */
 .modal-backdrop {
   position: fixed;
+  font-family: system-ui, -apple-system, sans-serif;
   top: 0;
   left: 0;
   width: 100vw;

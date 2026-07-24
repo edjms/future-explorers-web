@@ -10,6 +10,7 @@ import { ModalEditar } from '../modal-editar/modal-editar';
   templateUrl: './tabla-estudiantes.html',
   styles: `.tabla-container {
     background: #ffffff;
+    font-family: system-ui, -apple-system, sans-serif;
     border-radius: 12px;
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.05),

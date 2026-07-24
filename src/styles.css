@@ -1,5 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  /* Tipografía */
+  --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
+  /* Paleta de Colores Primarios */
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-text-main: #1e293b;
+  --color-text-muted: #64748b;
+  --color-bg-app: #f8fafc;
+  --color-card-bg: #ffffff;
+  --color-border: #e2e8f0;
+
+  /* Estados / Badges */
+  --color-success: #15803d;
+  --color-success-bg: #dcfce7;
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fee2e2;
+
+  /* Bordes y Sombras */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --shadow-card: 0 4px 6px -1px rgba(148, 163, 184, 0.05);
+}
+
+/* 2. Configuración Tipográfica Global */
+html, body {
+  font-family: var(--font-family);
+  color: var(--color-text-main);
+  background-color: var(--color-bg-app);
+  margin: 0;
+  padding: 0;
+}
 
 
 
