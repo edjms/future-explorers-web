@@ -13,8 +13,8 @@ import { ModalEditar } from '../modal-editar/modal-editar';
     font-family: system-ui, -apple-system, sans-serif;
     border-radius: 12px;
     box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.05),
-      0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      0px 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0px 2px 4px -1px rgba(0, 0, 0, 0.03);
     border: 1px solid #e2e8f0;
     overflow: hidden; /* Para que los bordes redondeados corten la tabla */
     width: 100%;
@@ -100,7 +100,7 @@ import { ModalEditar } from '../modal-editar/modal-editar';
     justify-content: space-between;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     align-items: center;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     font-size: 0.9rem;
     color: #64748b;
     padding: 0 0.5rem;
@@ -140,7 +140,6 @@ export class TablaEstudiantes implements OnInit {
 
   mostrarModalEditar: boolean = false;
   alumnoParaEditar: AlumnoPagoDTO | null = null;
-  // Variables para controlar la paginación
   paginaActual: number = 0;
   tamanoPagina: number = 6;
   totalElementos: number = 0;

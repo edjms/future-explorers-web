@@ -48,12 +48,25 @@
           </div>
 
           <div class="form-group">
+            <label>Telefono</label>
+            <input type="number" class="form-control" formControlName="telefono" placeholder="1234567890">
+          </div>
+
+          <div class="form-group">
             <label>Apellidos</label>
             <input type="text" class="form-control" formControlName="apellido" placeholder="Apellidos completos">
           </div>
 
           <div class="form-group">
-            <label>Profesor Asignado</label>
+            <label>Estado Inicial</label>
+            <select class="form-control" formControlName="estado">
+              <option [value]="true">Activo</option>
+              <option [value]="false">Inactivo / Bloqueado</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Asignar Profesor</label>
             <select class="form-control" formControlName="profesorId">
               <option value="" disabled selected>Seleccione un profesor</option>
               <option *ngFor="let prof of listaProfesores" [value]="prof.id">
@@ -63,10 +76,12 @@
           </div>
 
           <div class="form-group">
-            <label>Estado Inicial</label>
-            <select class="form-control" formControlName="estado">
-              <option [value]="true">Activo</option>
-              <option [value]="false">Inactivo / Bloqueado</option>
+            <label>Asignar Tarifa</label>
+            <select class="form-control" formControlName="tarifaId">
+              <option value="" disabled selected>Seleccione una Tarifa</option>
+              <option *ngFor="let tarifa of listaTarifa" [value]="tarifa.id">
+                {{ tarifa.descripcion }}
+              </option>
             </select>
           </div>
 

@@ -23,7 +23,7 @@
                  class="avatar-img">
 
             <img *ngIf="!imagenPreview && (form.get('imagenUrl')?.value && form.get('imagenUrl')?.value !== 'no se tiene aun')"
-                 [src]="'fotos-alumnos/' + form.get('imagenUrl')?.value"
+                 [src]="urlFotos + form.get('imagenUrl')?.value"
                  alt="Foto actual del estudiante"
                  class="avatar-img">
 
@@ -42,10 +42,23 @@
             <input type="text" class="form-control" formControlName="documento">
           </div>
 
+
+          <div class="form-group">
+            <label style="font-weight: 500; color: #475569;">Email</label>
+            <input type="email" class="form-control" formControlName="email">
+          </div>
+
+
           <div class="form-group">
             <label style="font-weight: 500; color: #475569;">Nombre</label>
             <input type="text" class="form-control" formControlName="nombre">
           </div>
+
+          <div class="form-group">
+            <label>Telefono</label>
+            <input type="text" class="form-control" formControlName="telefono" placeholder="1234567890">
+          </div>
+
 
           <div class="form-group">
             <label style="font-weight: 500; color: #475569;">Apellido</label>
@@ -53,8 +66,11 @@
           </div>
 
           <div class="form-group">
-            <label style="font-weight: 500; color: #475569;">Email</label>
-            <input type="email" class="form-control" formControlName="email">
+            <label style="font-weight: 500; color: #475569;">Estado</label>
+            <select class="form-control" formControlName="activo">
+              <option [ngValue]="true">Activo</option>
+              <option [ngValue]="false">Inactivo</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -68,12 +84,15 @@
           </div>
 
           <div class="form-group">
-            <label style="font-weight: 500; color: #475569;">Estado</label>
-            <select class="form-control" formControlName="activo">
-              <option [ngValue]="true">Activo</option>
-              <option [ngValue]="false">Inactivo</option>
+            <label>Asignar Tarifa</label>
+            <select class="form-control" formControlName="tarifaId">
+              <option value="" disabled selected>Seleccione una Tarifa</option>
+              <option *ngFor="let tarifa of listaTarifa" [value]="tarifa.id">
+                {{ tarifa.descripcion }}
+              </option>
             </select>
           </div>
+
 
         </div>
       </div>

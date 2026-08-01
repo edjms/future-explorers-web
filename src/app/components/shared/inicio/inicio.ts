@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EstudianteService } from '../../features/estudiantes/servicios/estudiante';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  // 2. Quitamos EstudiantesService de la lista de imports
   imports: [RouterLink],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css',
@@ -16,7 +16,7 @@ export class Inicio implements OnInit {
   cargandoTotal: boolean = true;
 
   constructor(private estudiantesService: EstudianteService,private cdr: ChangeDetectorRef  ) {}
-
+  urlPicture = environment.urlPictures;
   ngOnInit(): void {
     this.obtenerCantidadExploradores();
   }

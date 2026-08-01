@@ -2,6 +2,7 @@ import { Component, signal, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Auth } from '../../features/auth/servicios/auth';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -13,11 +14,10 @@ import { Auth } from '../../features/auth/servicios/auth';
 export class Navbar {
   // Inyección de servicios
   private authService = inject(Auth);
-
   // Estados del componente con Signals
   protected readonly moduloActivo = signal<string>('estudiantes');
   protected readonly isDropdownOpen = signal<boolean>(false);
-
+  urlPicture=environment.urlPictures;
   get userName(): string {
     const user = this.authService.currentUser();
     if (!user) return 'Usuario';
@@ -31,7 +31,7 @@ export class Navbar {
     if (foto.startsWith('http') || foto.startsWith('fotos-alumnos/')) {
       return foto;
     }
-    return `fotos-alumnos/${foto}`;
+    return `${environment.urlPictures}${foto}`;
   }
 
   get userInitial(): string {

@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 export interface AlumnoPagoDTO {
   documento: string;
   nombreCompleto: string;
+  telefono: string;
   profesorAsignado: string;
   fechaVencimiento: string | null;// Llega como String ISO (YYYY-MM-DD)
   diasParaVencer: number;

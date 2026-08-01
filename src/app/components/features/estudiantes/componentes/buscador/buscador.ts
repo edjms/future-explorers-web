@@ -10,9 +10,10 @@ import { EstudianteService } from '../../servicios/estudiante';
   templateUrl: './buscador.html',
   styles: `
     .buscador-container {
-      margin-bottom: 1rem;
-      width: 100%;
-      font-family: system-ui, -apple-system, sans-serif;font-family: system-ui, -apple-system, sans-serif;
+    width: 100%;
+    padding: 0.5rem 0rem 0rem;
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 1300px;
     }
 
     .input-wrapper {

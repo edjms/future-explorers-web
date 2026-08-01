@@ -4,6 +4,7 @@ export interface ProfesorModel {
   nombre: string;
   apellido: string;
   email?: string;
+  telefono: string;
   imagenUrl?: string;
   porcentajeComision: number;
 }

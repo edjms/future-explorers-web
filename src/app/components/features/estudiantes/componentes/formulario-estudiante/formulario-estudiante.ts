@@ -4,6 +4,9 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { EstudianteService } from '../../servicios/estudiante';
 import { ProfesorService } from '../../../profesores/servicios/profesor';
 import { finalize } from 'rxjs';
+import { Tarifa } from '../../servicios/tarifa';
+import { TarifaModel } from '../../../../../models/tarifa.model';
+import { ProfesorModel } from '../../../../../models/profesor.model';
 
 @Component({
   selector: 'app-formulario-estudiante',
@@ -233,7 +236,8 @@ export class FormularioEstudiante implements OnInit {
   @Output() cerrar = new EventEmitter<void>();
 
   imagenPreview: string | null = null;
-  listaProfesores: any[] = [];
+  listaProfesores: ProfesorModel[] = [];
+  listaTarifa: TarifaModel[] = [];
 
   // Variables de Control de Estado y Errores
   guardando = false;
@@ -243,6 +247,7 @@ export class FormularioEstudiante implements OnInit {
     private fb: FormBuilder,
     private estudianteService: EstudianteService,
     private profesorService: ProfesorService,
+    private tarifaService: Tarifa,
     private cdr: ChangeDetectorRef,
   ) {}
 
@@ -251,12 +256,15 @@ export class FormularioEstudiante implements OnInit {
       documento: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
-      correo: ['', [Validators.required, Validators.email]],
+      correo: [''],
+      telefono: [''],
       imagenUrl: [''],
       profesorId: ['', [Validators.required]],
+      tarifaId: ['',[Validators.required]],
       estado: [true, [Validators.required]],
     });
     this.cargarProfesores();
+    this.cargarTarifa();
   }
 
   capturarNombreArchivo(event: any) {
@@ -277,12 +285,24 @@ export class FormularioEstudiante implements OnInit {
 
   cargarProfesores(): void {
     this.profesorService.obtenerProfesores().subscribe({
-      next: (data: any) => {
-        this.listaProfesores = data.content || data;
+      next: (data: ProfesorModel[]) => {
+        this.listaProfesores = data;
         this.cdr.detectChanges();
       },
       error: (err: any) => {
         console.error('Error al cargar profesores:', err);
+      },
+    });
+  }
+
+  cargarTarifa(): void {
+    this.tarifaService.obtenerTarifa().subscribe({
+      next: (data: TarifaModel[]) =>{
+        this.listaTarifa = data;
+        this.cdr.detectChanges();
+      },
+      error: (err:any) => {
+        console.error('Error al cargar tarifas:', err);
       },
     });
   }
@@ -307,10 +327,11 @@ export class FormularioEstudiante implements OnInit {
       nombre: formValues.nombre,
       apellido: formValues.apellido,
       email: formValues.correo,
+      telefono: formValues.telefono,
       fechaIngreso: hoy,
       imagenUrl: formValues.imagenUrl,
       activo: formValues.estado === 'true' || formValues.estado === true,
-      tarifa: { id: 1 },
+      tarifa: { id: Number(formValues.tarifaId)},
       profesor: { id: Number(formValues.profesorId) },
     };
 
@@ -326,6 +347,7 @@ export class FormularioEstudiante implements OnInit {
         next: (respuesta) => {
           console.log('✅ ¡Guardado con éxito!', respuesta);
           this.cerrar.emit();
+          this.cdr.detectChanges();
         },
         error: (error) => {
           console.error('🔴 Error al registrar estudiante:', error);
@@ -333,8 +355,6 @@ export class FormularioEstudiante implements OnInit {
           // Extraemos el mensaje retornado por Spring Boot si existe
           this.mensajeError = error.error?.mensaje
             || 'No se pudo guardar el estudiante. Verifica los datos o la conexión con el servidor.';
-
-          // Forzamos la detección de cambios para evitar que la pantalla se congele
           this.cdr.detectChanges();
         },
       });

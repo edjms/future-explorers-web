@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfesorService } from '../servicios/profesor';
 import { ProfesorModel } from '../../../../models/profesor.model';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-profesores',
@@ -22,7 +23,7 @@ export class Profesores implements OnInit {
 
   profesorForm: ProfesorModel = this.inicializarProfesor();
   imagenPreview: string | null = null; // 👈 Para la vista previa de la imagen seleccionada
-
+  urlPicture = environment.urlPictures;
   constructor(
     private profesorService: ProfesorService,
     private cdr: ChangeDetectorRef
@@ -38,6 +39,7 @@ export class Profesores implements OnInit {
       nombre: '',
       apellido: '',
       email: '',
+      telefono: '',
       imagenUrl: '',
       porcentajeComision: 0.40
     };
@@ -70,7 +72,8 @@ export class Profesores implements OnInit {
 
   abrirModalEditar(profesor: ProfesorModel): void {
     this.editando = true;
-    this.profesorForm = { ...profesor };
+    this.profesorForm = { ...profesor,
+      telefono: profesor.telefono ?? '' };
     this.imagenPreview = null; // Si viene una URL o nombre relativo, la renderiza la plantilla
     this.limpiarMensajes();
     this.mostrarModal = true;
@@ -96,7 +99,7 @@ export class Profesores implements OnInit {
 
   guardarProfesor(): void {
     this.limpiarMensajes();
-
+    console.log('1. Payload a enviar:', JSON.stringify(this.profesorForm, null, 2));
     if (this.editando && this.profesorForm.id) {
       this.profesorService.actualizarProfesor(this.profesorForm.id, this.profesorForm).subscribe({
         next: () => {
