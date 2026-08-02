@@ -44,6 +44,9 @@
       "dist/**/*",
       "main.js"
     ],
+    "extraResources": [
+      "config.json"
+    ],
     "win": {
       "target": "nsis"
     }

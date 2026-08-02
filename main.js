@@ -4,8 +4,29 @@ const fs = require('fs');
 
 let win;
 
-// 1. Definir la carpeta donde se guardarán las fotos en Windows
-// Ruta final: C:\Users\NombreUsuario\Pictures\FutureExplorers_Fotos
+// --- 1. CONFIGURACIÓN EXTERNA (config.json) ---
+// Busca el config.json junto al ejecutable o en la raíz si es desarrollo
+const configPath = app.isPackaged 
+  ? path.join(process.resourcesPath, 'config.json')
+  : path.join(__dirname, 'config.json');
+
+// Valores por defecto
+let appConfig = {
+  apiUrl: 'http://localhost:8080/api',
+  urlPictures: '/fotos-alumnos/'
+};
+
+// Cargar config.json si existe
+try {
+  if (fs.existsSync(configPath)) {
+    const rawData = fs.readFileSync(configPath, 'utf8');
+    appConfig = JSON.parse(rawData);
+  }
+} catch (error) {
+  console.error('Error al leer config.json:', error);
+}
+
+// Ruta final de guardado de fotos en Windows (Pictures/FutureExplorers_Fotos)
 const RUTA_FOTOS = path.join(app.getPath('pictures'), 'FutureExplorers_Fotos');
 
 function crearCarpetaFotos() {
@@ -34,9 +55,8 @@ function createWindow() {
   });
 }
 
-// 2. Cuando Electron esté listo, configuramos el protocolo de imágenes y la ventana
+// --- 2. EVENTOS DE ELECTRON ---
 app.on('ready', () => {
-  // Aseguramos que la carpeta de fotos exista
   crearCarpetaFotos();
 
   // Permitir que Angular cargue imágenes locales usando "local-file://"
@@ -52,9 +72,21 @@ app.on('ready', () => {
   createWindow();
 });
 
-// 3. Responder a Angular si nos pregunta por la ruta de fotos
+// --- 3. RESPUESTAS IPC PARA ANGULAR ---
+
+// Enviar la ruta física de guardado (Pictures/FutureExplorers_Fotos)
 ipcMain.handle('get-photos-path', () => {
   return RUTA_FOTOS;
+});
+
+// Enviar la URL de la API (desde config.json)
+ipcMain.handle('get-api-url', () => {
+  return appConfig.apiUrl;
+});
+
+// Enviar la ruta/prefijo de las imágenes (desde config.json)
+ipcMain.handle('get-url-pictures', () => {
+  return appConfig.urlPictures;
 });
 
 app.on('window-all-closed', () => {
